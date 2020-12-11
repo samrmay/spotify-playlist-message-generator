@@ -45,7 +45,11 @@ export function getSongs(
     headers: {
       Authorization: "Bearer " + token,
     },
-  }).then((response) => response.json());
+  })
+    .then((response) => response.json())
+    .catch((response) => {
+      return { tracks: null };
+    });
 }
 
 function findMatch(word, tracks, notArtists = null) {
@@ -67,36 +71,46 @@ function findMatch(word, tracks, notArtists = null) {
 }
 
 async function findExactMatch(word, token, genre = null) {
-  // Hipster searches
-  let notArtists = [];
-  for (let i = 0; i < 2; i++) {
-    const result = await getSongs(word, token, notArtists);
-    console.log(result);
-    if (result.item) {
-      return result.item;
-    } else {
-      notArtists = result.notArtists;
+  const hipster = [true, false];
+  const genres = [
+    null,
+    "blues",
+    "classical",
+    "disco",
+    "experimental",
+    "folk",
+    "jazz",
+    "pop",
+    "rap",
+    "r&b",
+    "techno",
+    "video game music",
+  ];
+  for (let i in genres) {
+    const genre = genres[i];
+    for (let j in hipster) {
+      const isHipster = hipster[j];
+      let notArtists = [];
+      for (let k = 0; k < 2; k++) {
+        const queryResult = await getSongs(
+          word,
+          token,
+          notArtists,
+          isHipster,
+          genre
+        );
+        if (queryResult.tracks) {
+          const result = findMatch(word, queryResult.tracks);
+          if (result.item) {
+            return result.item;
+          } else {
+            notArtists = result.notArtists;
+          }
+        }
+      }
     }
   }
-  // Popular searches
-
-  return getSongs(word, token).then((response) => {
-    const result1 = findMatch(word, response.tracks);
-    if (result1.item) {
-      return result1.item;
-    } else {
-      return getSongs(word, token, result1.notArtists).then((response) => {
-        const result2 = findMatch(word, response.tracks);
-        if (result2.item) {
-          return result2.item;
-        } else {
-          return getSongs(word, token, null, false).then((response) => {
-            return findMatch(word, response.tracks);
-          });
-        }
-      });
-    }
-  });
+  return null;
 }
 
 export function generateSongSequence(message, token) {
