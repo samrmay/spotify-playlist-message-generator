@@ -1,14 +1,15 @@
 import React from 'react'
-import {getAccessToken, getSongs} from '../../services/spotify'
+import {getAccessToken, generateSongSequence} from '../../services/spotify'
 
 class Body extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            songName: '',
+            message: '',
             accessToken: ''
         }
         this.handleChange = this.handleChange.bind(this)
+        this.getAccess = this.getAccess.bind(this)
         this.searchSong = this.searchSong.bind(this)
     }
 
@@ -17,26 +18,20 @@ class Body extends React.Component {
         this.setState({[name]: value})
     }
 
+    getAccess() {
+        return getAccessToken().then(response => {this.setState({accessToken: response.access_token})})
+    }
+
     searchSong() {
-        if (this.state.accessToken == '') {
-            getAccessToken()
-            .then(response => {
-                this.setState({accessToken: response.access_token})
-            })
-            .then(response => {
-                getSongs(this.state.songName, this.state.accessToken)
-                .then(response => {console.log(response)})
-            })
-        }
-        else {
-            getSongs(this.state.songName, this.state.accessToken).then(response => console.log(response))
-        }
+        this.getAccess().then(response => generateSongSequence(this.state.message, this.state.accessToken))
     }
 
     render() {
         return(
             <div>
-                <input name='songName' value={this.state.songName} onChange={this.handleChange}/>
+                <textarea name='message' value={this.state.message} onChange={this.handleChange}/>
+                <br />
+                <br />
                 <button onClick={this.searchSong}>go</button>
             </div>
         )
