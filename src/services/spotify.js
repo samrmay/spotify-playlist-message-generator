@@ -122,5 +122,7 @@ export function generateSongSequence(message, token) {
     promises.push(findExactMatch(wordArr[i], token));
   }
 
-  Promise.all(promises).then((results) => console.log(results));
+  return Promise.all(promises).then((results) => {
+    return results;
+  });
 }

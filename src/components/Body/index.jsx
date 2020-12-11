@@ -1,4 +1,5 @@
 import React from 'react'
+import MockPlaylist from './MockPlaylist'
 import {getAccessToken, generateSongSequence} from '../../services/spotify'
 
 class Body extends React.Component {
@@ -6,7 +7,9 @@ class Body extends React.Component {
         super(props)
         this.state = {
             message: '',
-            accessToken: ''
+            accessToken: '',
+            spotifyQueried: false,
+            songsReturned: []
         }
         this.handleChange = this.handleChange.bind(this)
         this.getAccess = this.getAccess.bind(this)
@@ -23,16 +26,23 @@ class Body extends React.Component {
     }
 
     searchSong() {
-        this.getAccess().then(response => generateSongSequence(this.state.message, this.state.accessToken))
+        this.setState({spotifyQueried: true})
+        this.getAccess().then(response => {
+            generateSongSequence(this.state.message, this.state.accessToken).then(response => {
+                this.setState({songsReturned: response})
+            })
+        })
     }
 
     render() {
+        const {spotifyQueried, songsReturned} = this.state
         return(
             <div>
                 <textarea name='message' value={this.state.message} onChange={this.handleChange}/>
                 <br />
                 <br />
                 <button onClick={this.searchSong}>go</button>
+                {spotifyQueried ? <MockPlaylist songs={songsReturned}/> : null}
             </div>
         )
     }
