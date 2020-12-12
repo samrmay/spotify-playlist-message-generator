@@ -3,3 +3,4 @@ package-lock.json
 node_modules
 dist
 .env
+get_songs_check_twice.txt

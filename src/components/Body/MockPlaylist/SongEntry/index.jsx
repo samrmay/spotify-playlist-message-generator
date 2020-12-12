@@ -21,7 +21,7 @@ class SongEntry extends React.Component {
         const {name, artists, preview_url} = song
         const artistsString = this.stringifyArtists(artists)
         return(
-        <div>{name}, {artistsString}</div>
+        <div>{name}: {artistsString}</div>
         )
     }
 }

@@ -60,7 +60,7 @@ function findMatch(word, tracks, notArtists = null) {
   }
   for (let i in tracks.items) {
     const item = tracks.items[i];
-    const name = item.name.toLowerCase();
+    const name = item.name.toLowerCase().replace(/\s\(feat.+\)/, "");
     if (name == word) {
       return { item, notArtists: null };
     } else {
@@ -81,6 +81,8 @@ async function findExactMatch(word, token, genre = null) {
     "disco",
     "experimental",
     "folk",
+    "indie pop",
+    "indie rock",
     "jazz",
     "pop",
     "rap",
@@ -95,22 +97,11 @@ async function findExactMatch(word, token, genre = null) {
     const genre = genres[i];
     for (let j in hipster) {
       const isHipster = hipster[j];
-      let notArtists = [];
-      for (let k = 0; k < 2; k++) {
-        const queryResult = await getSongs(
-          word,
-          token,
-          notArtists,
-          isHipster,
-          genre
-        );
-        if (queryResult.tracks) {
-          const result = findMatch(word, queryResult.tracks);
-          if (result.item) {
-            return result.item;
-          } else {
-            notArtists = result.notArtists;
-          }
+      const queryResult = await getSongs(word, token, null, isHipster, genre);
+      if (queryResult.tracks) {
+        const result = findMatch(word, queryResult.tracks);
+        if (result.item) {
+          return result.item;
         }
       }
     }
@@ -118,24 +109,40 @@ async function findExactMatch(word, token, genre = null) {
   return null;
 }
 
-function generatePolymorphisms(word) {
-  const WORDS_DICT = {
-    to: "2",
-    for: "4",
-    the: "da",
+function generatePolymorphisms(message) {
+  const POLY_DICT = {
+    "is a": ["issa"],
+    "got to": ["gotta"],
+    "i've": ["i have"],
+    im: ["i am"],
+    "i'm": ["i am"],
+    a: ["ay"],
+    for: ["4", "foor"],
+    to: ["too"],
+    2: ["too"],
+    the: ["dah", "duh"],
+    and: ["anne"],
   };
-  if (Object.keys(WORDS_DICT).includes(word)) {
-    return WORDS_DICT[word];
+
+  const keys = Object.keys(POLY_DICT);
+  for (let i in keys) {
+    const key = keys[i];
+    const patt = new RegExp(`\\b${key}\\b`, "gi");
+    const poly =
+      POLY_DICT[key][Math.floor(Math.random() * POLY_DICT[key].length)];
+    message = message.replace(patt, poly);
   }
-  return word;
+  message = message.replace(/[\.!,()\?]/gi, "");
+  return message;
 }
 
 export function generateSongSequence(message, token) {
-  message = message.toLowerCase();
+  message = generatePolymorphisms(message.toLowerCase());
+  console.log(message);
   const wordArr = message.split(" ");
   const promises = [];
   for (let i in wordArr) {
-    promises.push(findExactMatch(generatePolymorphisms(wordArr[i]), token));
+    promises.push(findExactMatch(wordArr[i], token));
   }
 
   return Promise.all(promises).then((results) => {

@@ -26,7 +26,7 @@ class Body extends React.Component {
     }
 
     searchSong() {
-        this.setState({spotifyQueried: true})
+        this.setState({songsReturned: [], spotifyQueried: true})
         this.getAccess().then(response => {
             generateSongSequence(this.state.message, this.state.accessToken).then(response => {
                 this.setState({songsReturned: response})
