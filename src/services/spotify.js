@@ -1,3 +1,5 @@
+import shuffleArr from "./shuffleArr";
+
 export function getAccessToken() {
   const authString =
     "Basic " +
@@ -86,6 +88,9 @@ async function findExactMatch(word, token, genre = null) {
     "techno",
     "video game music",
   ];
+  shuffleArr(hipster);
+  shuffleArr(genres);
+
   for (let i in genres) {
     const genre = genres[i];
     for (let j in hipster) {
@@ -113,13 +118,24 @@ async function findExactMatch(word, token, genre = null) {
   return null;
 }
 
+function generatePolymorphisms(word) {
+  const WORDS_DICT = {
+    to: "2",
+    for: "4",
+    the: "da",
+  };
+  if (Object.keys(WORDS_DICT).includes(word)) {
+    return WORDS_DICT[word];
+  }
+  return word;
+}
+
 export function generateSongSequence(message, token) {
   message = message.toLowerCase();
   const wordArr = message.split(" ");
-  const sequence = [];
   const promises = [];
   for (let i in wordArr) {
-    promises.push(findExactMatch(wordArr[i], token));
+    promises.push(findExactMatch(generatePolymorphisms(wordArr[i]), token));
   }
 
   return Promise.all(promises).then((results) => {

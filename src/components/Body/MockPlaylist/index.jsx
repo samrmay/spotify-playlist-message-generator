@@ -12,7 +12,9 @@ class MockPlaylist extends React.Component {
         if (songs.length > 0) {
             songEntryArr = []
             for (let i in songs) {
-                songEntryArr.push(<SongEntry song={songs[i]} key={i}/>)
+                if (songs[i] !== null) {
+                    songEntryArr.push(<SongEntry song={songs[i]} key={i}/>)
+                }
             }
         }
         return(
