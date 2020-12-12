@@ -71,9 +71,7 @@ export async function findExactMatch(word, token) {
   const genres = [
     null,
     "classical",
-    "disco",
     "experimental",
-    "indie pop",
     "indie rock",
     "jazz",
     "pop",
