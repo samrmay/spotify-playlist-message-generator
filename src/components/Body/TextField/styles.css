@@ -1,0 +1,25 @@
+.textFieldContainer {
+  border-radius: 4px;
+  position: relative;
+  transition: 0.3s all;
+  padding: 1px;
+  display: flex;
+}
+
+.textInput {
+  border-color: black;
+  border-width: 3px;
+  border-style: solid;
+  border-radius: 5px;
+  background-color: transparent;
+  width: 100%;
+  font-size: 16px;
+  padding-left: 10px;
+  padding-right: 10px;
+  resize: none;
+}
+
+.textInput:focus {
+  border-color: #32a84c;
+  outline: none;
+}

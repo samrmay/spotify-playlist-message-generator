@@ -1,0 +1,8 @@
+.stringInput {
+  width: 400px;
+  height: 200px;
+  resize: none;
+}
+.stringInput:focus {
+  outline: none;
+}

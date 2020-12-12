@@ -1,6 +1,8 @@
 import React from 'react'
 import MockPlaylist from './MockPlaylist'
+import TextField from './TextField'
 import {getAccessToken, generateSongSequence} from '../../services/spotify'
+import styles from './styles.css'
 
 class Body extends React.Component {
     constructor(props) {
@@ -16,8 +18,7 @@ class Body extends React.Component {
         this.searchSong = this.searchSong.bind(this)
     }
 
-    handleChange(e) {
-        const {name, value} = e.target
+    handleChange(name, value) {
         this.setState({[name]: value})
     }
 
@@ -27,7 +28,7 @@ class Body extends React.Component {
 
     searchSong() {
         this.setState({songsReturned: [], spotifyQueried: true})
-        this.getAccess().then(response => {
+        this.getAccess().then(_ => {
             generateSongSequence(this.state.message, this.state.accessToken).then(response => {
                 this.setState({songsReturned: response})
             })
@@ -35,10 +36,17 @@ class Body extends React.Component {
     }
 
     render() {
-        const {spotifyQueried, songsReturned} = this.state
+        const {spotifyQueried, songsReturned, message} = this.state
         return(
             <div>
-                <textarea name='message' value={this.state.message} onChange={this.handleChange}/>
+                <TextField 
+                    handleChange={this.handleChange} 
+                    name='message'
+                    placeholder='Type in your message here'
+                    height='100px'
+                    width='300px'
+                    value={message}
+                    />
                 <br />
                 <br />
                 <button onClick={this.searchSong}>go</button>
