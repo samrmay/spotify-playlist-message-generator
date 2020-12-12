@@ -1,5 +1,6 @@
 import React from 'react'
 import SongEntry from './SongEntry'
+import styles from './styles.css'
 
 class MockPlaylist extends React.Component {
     constructor(props) {
@@ -18,7 +19,8 @@ class MockPlaylist extends React.Component {
             }
         }
         return(
-            <div>
+            <div className={styles.playlistContainer}>
+                <SongEntry header={true} />
                 {songEntryArr ? songEntryArr : <div>loading...</div>}
             </div>
         )

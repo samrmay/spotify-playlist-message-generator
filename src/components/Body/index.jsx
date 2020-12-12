@@ -1,6 +1,7 @@
 import React from 'react'
 import MockPlaylist from './MockPlaylist'
 import TextField from './TextField'
+import LoadingButton from './LoadingButton'
 import {getAccessToken, parseSequence, findExactMatch} from '../../services/spotify'
 import styles from './styles.css'
 
@@ -11,7 +12,8 @@ class Body extends React.Component {
             message: '',
             accessToken: '',
             spotifyQueried: false,
-            songsReturned: []
+            songsReturned: [],
+            goClicked: false
         }
         this.handleChange = this.handleChange.bind(this)
         this.getAccess = this.getAccess.bind(this)
@@ -30,7 +32,7 @@ class Body extends React.Component {
     }
 
     searchSong() {
-        this.setState({songsReturned: [], spotifyQueried: true})
+        this.setState({songsReturned: [], spotifyQueried: true, goClicked: true})
         this.getAccess().then(token => {
             let {message} = this.state
             message = parseSequence(message)
@@ -44,6 +46,7 @@ class Body extends React.Component {
                     this.setState({songsReturned: newArr})
                 })
             }
+            this.setState({goClicked: false})
         })
     }
 
@@ -54,15 +57,19 @@ class Body extends React.Component {
                 <TextField 
                     handleChange={this.handleChange} 
                     name='message'
-                    placeholder='Type in your message here'
+                    placeholder='Type your message here.'
                     height='100px'
                     width='300px'
                     value={message}
                     />
                 <br />
-                <br />
-                <button onClick={this.searchSong}>go</button>
-                {spotifyQueried ? <MockPlaylist songs={songsReturned}/> : null}
+                <LoadingButton 
+                    content='go' 
+                    width='100px' 
+                    handleClick={this.searchSong}
+                    wasClicked={this.state.goClicked}/>
+                <hr />
+                {spotifyQueried ? <MockPlaylist songs={songsReturned} standby={true}/> : null}
             </div>
         )
     }

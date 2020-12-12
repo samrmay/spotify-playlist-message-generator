@@ -1,4 +1,5 @@
 import React from 'react'
+import styles from './styles.css'
 
 class SongEntry extends React.Component {
     constructor(props) {
@@ -17,13 +18,29 @@ class SongEntry extends React.Component {
     }
 
     render() {
-        const {song} = this.props
-        const {name, artists, preview_url} = song
-        const artistsString = this.stringifyArtists(artists)
-        return(
-        <div>{name}: {artistsString}</div>
-        )
+        if (!this.props.header) {
+            const {song} = this.props
+            const {name, artists} = song
+            const artistsString = this.stringifyArtists(artists)
+            return(
+            <div className={styles.songEntryContainer}>
+                <div className={styles.songName}>{name}</div>
+                <div className={styles.artistsString}>{artistsString}</div>
+            </div>
+            )
+        } else {
+            return(
+                <div className={styles.headerContainer}>
+                    <div className={styles.songName}>Title</div>
+                    <div className={styles.artistsString}>Artists</div>
+                </div>
+            )
+        }
     }
 }
 
 export default SongEntry
+
+SongEntry.defaultProps = {
+    header: false,
+}
