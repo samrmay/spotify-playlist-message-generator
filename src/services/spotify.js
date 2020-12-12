@@ -54,34 +54,25 @@ export function getSongs(
     });
 }
 
-function findMatch(word, tracks, notArtists = null) {
-  if (!notArtists) {
-    notArtists = [];
-  }
+function findMatch(word, tracks) {
   for (let i in tracks.items) {
     const item = tracks.items[i];
     let name = item.name.toLowerCase().replace(/\s\(feat.+\)/, "");
     name = name.replace(/[\.!,()\?]/gi, "");
     if (name == word) {
-      return { item, notArtists: null };
-    } else {
-      for (let i in item.artists) {
-        notArtists.push(item.artists[i].name.toLowerCase());
-      }
+      return { item };
     }
   }
-  return { item: null, notArtists: [...new Set(notArtists)] };
+  return { item: null };
 }
 
-async function findExactMatch(word, token, genre = null) {
+export async function findExactMatch(word, token) {
   const hipster = [true, false];
   const genres = [
     null,
-    "blues",
     "classical",
     "disco",
     "experimental",
-    "folk",
     "indie pop",
     "indie rock",
     "jazz",
@@ -93,20 +84,21 @@ async function findExactMatch(word, token, genre = null) {
   ];
   shuffleArr(hipster);
   shuffleArr(genres);
-
+  const promises = [];
   for (let i in genres) {
-    const genre = genres[i];
     for (let j in hipster) {
-      const isHipster = hipster[j];
-      const queryResult = await getSongs(word, token, null, isHipster, genre);
-      if (queryResult.tracks) {
-        const result = findMatch(word, queryResult.tracks);
-        if (result.item) {
-          return result.item;
-        }
-      }
+      promises.push(getSongs(word, token, null, hipster[j], genres[i]));
     }
   }
+  const queryResults = await Promise.all(promises);
+
+  for (let i in queryResults) {
+    const result = findMatch(word, queryResults[i].tracks);
+    if (result.item) {
+      return result.item;
+    }
+  }
+
   return null;
 }
 
@@ -127,6 +119,12 @@ function generatePolymorphisms(message) {
     "&": ["anne"],
     have: ["haf", "hav"],
     app: ["application"],
+    "you're": ["ur"],
+    your: ["ur"],
+    in: [""],
+    "don't": ["do not"],
+    do: ["dew"],
+    "doesn't": ["does not"],
   };
 
   const keys = Object.keys(POLY_DICT);
@@ -141,15 +139,7 @@ function generatePolymorphisms(message) {
   return message;
 }
 
-export function generateSongSequence(message, token) {
+export function parseSequence(message) {
   message = generatePolymorphisms(message.toLowerCase());
-  const wordArr = message.split(" ");
-  const promises = [];
-  for (let i in wordArr) {
-    promises.push(findExactMatch(wordArr[i], token));
-  }
-
-  return Promise.all(promises).then((results) => {
-    return results;
-  });
+  return message.split(" ").filter((item) => item.length > 0);
 }

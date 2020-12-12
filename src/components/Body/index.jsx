@@ -1,7 +1,7 @@
 import React from 'react'
 import MockPlaylist from './MockPlaylist'
 import TextField from './TextField'
-import {getAccessToken, generateSongSequence} from '../../services/spotify'
+import {getAccessToken, parseSequence, findExactMatch} from '../../services/spotify'
 import styles from './styles.css'
 
 class Body extends React.Component {
@@ -23,15 +23,27 @@ class Body extends React.Component {
     }
 
     getAccess() {
-        return getAccessToken().then(response => {this.setState({accessToken: response.access_token})})
+        return getAccessToken().then(response => {
+            this.setState({accessToken: response.access_token})
+            return response.access_token
+        })
     }
 
     searchSong() {
         this.setState({songsReturned: [], spotifyQueried: true})
-        this.getAccess().then(_ => {
-            generateSongSequence(this.state.message, this.state.accessToken).then(response => {
-                this.setState({songsReturned: response})
-            })
+        this.getAccess().then(token => {
+            let {message} = this.state
+            message = parseSequence(message)
+            const newArr = []
+            for (let _ in message) {
+                newArr.push(null)
+            }
+            for (let i in message) {
+                findExactMatch(message[i], token).then(response => {
+                    newArr[i] = response
+                    this.setState({songsReturned: newArr})
+                })
+            }
         })
     }
 
