@@ -60,7 +60,8 @@ function findMatch(word, tracks, notArtists = null) {
   }
   for (let i in tracks.items) {
     const item = tracks.items[i];
-    const name = item.name.toLowerCase().replace(/\s\(feat.+\)/, "");
+    let name = item.name.toLowerCase().replace(/\s\(feat.+\)/, "");
+    name = name.replace(/[\.!,()\?]/gi, "");
     if (name == word) {
       return { item, notArtists: null };
     } else {
@@ -122,6 +123,10 @@ function generatePolymorphisms(message) {
     2: ["too"],
     the: ["dah", "duh"],
     and: ["anne"],
+    be: ["bee"],
+    "&": ["anne"],
+    have: ["haf", "hav"],
+    app: ["application"],
   };
 
   const keys = Object.keys(POLY_DICT);
@@ -138,7 +143,6 @@ function generatePolymorphisms(message) {
 
 export function generateSongSequence(message, token) {
   message = generatePolymorphisms(message.toLowerCase());
-  console.log(message);
   const wordArr = message.split(" ");
   const promises = [];
   for (let i in wordArr) {
