@@ -7,7 +7,7 @@ export function getAccessToken() {
       process.env.SPOTIFY_CLIENT_ID + ":" + process.env.SPOTIFY_CLIENT_SECRET
     );
 
-  return fetch(process.env.SPOTIFY_ACCOUNTS + "token", {
+  return fetch(process.env.SPOTIFY_ACCOUNTS + "api/token", {
     method: "POST",
     headers: {
       Authorization: authString,

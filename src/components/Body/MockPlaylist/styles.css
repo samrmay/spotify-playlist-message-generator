@@ -3,5 +3,10 @@
 }
 
 .playlistContainer {
-  background-color: white;
+  background-color: whitesmoke;
+}
+
+.songsContainer {
+  overflow: auto;
+  height: 400px;
 }

@@ -13,11 +13,31 @@ class Body extends React.Component {
             accessToken: '',
             spotifyQueried: false,
             songsReturned: [],
-            goClicked: false
+            goClicked: false,
+            userAccessToken: null
         }
         this.handleChange = this.handleChange.bind(this)
         this.getAccess = this.getAccess.bind(this)
         this.searchMessage = this.searchMessage.bind(this)
+    }
+
+    componentDidMount() {
+        if (window.location.hash) {
+            const userAccessToken = window.location.hash.match(/access_token=(.+)&token_type/)[1]
+            const songsReturned = []
+            let i = 0
+            while (true) {
+                const song = JSON.parse(localStorage.getItem(`song#${i}`))
+                if (song) {
+                    songsReturned.push(song)
+                } else {
+                    break
+                }
+                i += 1
+            }
+
+            this.setState({userAccessToken, songsReturned, spotifyQueried: true})
+        }
     }
 
     handleChange(name, value) {
@@ -32,7 +52,6 @@ class Body extends React.Component {
     }
 
     async searchBatch(batch, token) {
-        console.log(batch)
         const promises = []
         for (let i in batch) {
             promises.push(findExactMatch(batch[i], token))
@@ -77,7 +96,7 @@ class Body extends React.Component {
     }
 
     render() {
-        const {spotifyQueried, songsReturned, message} = this.state
+        const {spotifyQueried, songsReturned, message, userAccessToken} = this.state
         return(
             <div>
                 <TextField 
@@ -95,7 +114,11 @@ class Body extends React.Component {
                     handleClick={this.searchMessage}
                     wasClicked={this.state.goClicked}/>
                 <hr />
-                {spotifyQueried ? <MockPlaylist songs={songsReturned} standby={true}/> : null}
+                {spotifyQueried ? 
+                <MockPlaylist 
+                    songs={songsReturned} 
+                    standby={true}
+                    userAccessToken={userAccessToken}/> : null}
             </div>
         )
     }
