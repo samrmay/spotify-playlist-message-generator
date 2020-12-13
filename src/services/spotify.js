@@ -175,16 +175,18 @@ export async function createPlaylist(name, songs, userAccessToken, userId) {
   }
 
   const body = songs.map((item) => item.uri);
-
-  return await fetch(
-    process.env.SPOTIFY_API + `playlists/${playlist.id}/tracks`,
-    {
+  const maxi = Math.ceil(body.length / 100) * 100;
+  for (let i = 1; i < maxi; i += 100) {
+    const upper = 100 > body.length ? body.length : 100;
+    const batch = body.splice(0, upper);
+    await fetch(process.env.SPOTIFY_API + `playlists/${playlist.id}/tracks`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${userAccessToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ uris: body }),
-    }
-  ).then((response) => response.json());
+      body: JSON.stringify({ uris: batch }),
+    });
+  }
+  return { error: null };
 }
