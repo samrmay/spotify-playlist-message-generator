@@ -73,6 +73,7 @@ class Body extends React.Component {
     }
 
     async searchMessage() {
+        localStorage.clear()
         this.setState({songsReturned: [], spotifyQueried: true, goClicked: true})
         this.getAccess().then(async (token) => {
             const message = parseSequence(this.state.message)

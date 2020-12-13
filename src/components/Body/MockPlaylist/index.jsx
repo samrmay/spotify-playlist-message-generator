@@ -9,6 +9,7 @@ class MockPlaylist extends React.Component {
         super(props)
         this.state = {
             playlistTitle: '',
+            playlistCreated: false
         }
         this.handleChange = this.handleChange.bind(this)
         this.redirectAuthURL = this.redirectAuthURL.bind(this)
@@ -56,7 +57,9 @@ class MockPlaylist extends React.Component {
         const {playlistTitle} = this.state
         getUserId(userAccessToken).then(response => {
             createPlaylist(playlistTitle, songs, userAccessToken, response).then(response => {
-                console.log(response)
+                if (response.playlist) {
+                    this.setState({playlistCreated: true, playlist: response.playlist})
+                }
             })
         })
         
@@ -94,6 +97,7 @@ class MockPlaylist extends React.Component {
                     {songEntryArr ? songEntryArr : <div>loading...</div>}
                 </div>
                 {actionButton}
+                {this.state.playlistCreated ? <div>playlist created</div> : null}
             </div>
         )
     }

@@ -137,7 +137,7 @@ function generatePolymorphisms(message) {
       POLY_DICT[key][Math.floor(Math.random() * POLY_DICT[key].length)];
     message = message.replace(patt, poly);
   }
-  message = message.replace(/[\.!,()\?:]/gi, "");
+  message = message.replace(/[\.!,()\?:"']/gi, "");
   return message;
 }
 
@@ -188,5 +188,5 @@ export async function createPlaylist(name, songs, userAccessToken, userId) {
       body: JSON.stringify({ uris: batch }),
     });
   }
-  return { error: null };
+  return { error: null, playlist: playlist };
 }
