@@ -100,20 +100,23 @@ class Body extends React.Component {
         const {spotifyQueried, songsReturned, message, userAccessToken} = this.state
         return(
             <div>
-                <TextField 
-                    handleChange={this.handleChange} 
-                    name='message'
-                    placeholder='Type your message here.'
-                    height='100px'
-                    width='300px'
-                    value={message}
-                    />
+                <div className={styles.inputContainer}>
+                    <TextField 
+                        handleChange={this.handleChange} 
+                        name='message'
+                        placeholder='Type your message here.'
+                        height='100px'
+                        width='400px'
+                        value={message}/>
+                </div>
                 <br />
-                <LoadingButton 
-                    content='go' 
-                    width='100px' 
-                    handleClick={this.searchMessage}
-                    wasClicked={this.state.goClicked}/>
+                <div className={styles.buttonContainer}>
+                    <LoadingButton 
+                        content='go' 
+                        width='100px' 
+                        handleClick={this.searchMessage}
+                        wasClicked={this.state.goClicked}/>
+                </div>
                 <hr />
                 {spotifyQueried ? 
                 <MockPlaylist 

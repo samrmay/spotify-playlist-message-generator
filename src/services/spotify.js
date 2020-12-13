@@ -67,6 +67,8 @@ function findMatch(word, tracks) {
 }
 
 export async function findExactMatch(word, token) {
+  // Spotify has no support for exact seaches, so have to make many
+  // Requests with different genres to find exact match
   const hipster = [true, false];
   const genres = [
     null,

@@ -1,8 +1,9 @@
-.stringInput {
-  width: 400px;
-  height: 200px;
-  resize: none;
+.inputContainer {
+  justify-content: center;
+  display: flex;
 }
-.stringInput:focus {
-  outline: none;
+
+.buttonContainer {
+  justify-content: center;
+  display: flex;
 }

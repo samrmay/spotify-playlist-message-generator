@@ -1,6 +1,7 @@
 import React from 'react'
 import SongEntry from './SongEntry'
 import TextField from '../TextField'
+import LoadingButton from '../LoadingButton'
 import {createPlaylist, getUserId} from '../../../services/spotify'
 import styles from './styles.css'
 
@@ -9,7 +10,8 @@ class MockPlaylist extends React.Component {
         super(props)
         this.state = {
             playlistTitle: '',
-            playlistCreated: false
+            playlistCreated: false,
+            playlistCreating: false
         }
         this.handleChange = this.handleChange.bind(this)
         this.redirectAuthURL = this.redirectAuthURL.bind(this)
@@ -55,10 +57,11 @@ class MockPlaylist extends React.Component {
     handleCreatePlaylist() {
         const {userAccessToken, songs} = this.props
         const {playlistTitle} = this.state
+        this.setState({playlistCreating: true})
         getUserId(userAccessToken).then(response => {
             createPlaylist(playlistTitle, songs, userAccessToken, response).then(response => {
                 if (response.playlist) {
-                    this.setState({playlistCreated: true, playlist: response.playlist})
+                    this.setState({playlistCreated: true, playlist: response.playlist, playlistCreating: false})
                 }
             })
         })
@@ -77,9 +80,9 @@ class MockPlaylist extends React.Component {
             }
         }
 
-        let actionButton = actionButton = <button onClick={this.redirectAuthURL}>Allow access</button>
+        let actionButton = actionButton = <LoadingButton content='allow access' handleClick={this.redirectAuthURL} width='100px'/>
         if (userAccessToken) {
-            actionButton = <button onClick={this.handleCreatePlaylist}>Create playlist</button>
+            actionButton = <LoadingButton content='create playlist' handleClick={this.handleCreatePlaylist} width='150px' wasClicked={this.state.playlistCreating}/>
         }
 
         return(

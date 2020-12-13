@@ -8,7 +8,8 @@ class Footer extends React.Component {
     render() {
         return(
             <div>
-                Footer. Sam May. github, HN, whatever
+                A mini project by Sam May.
+                <a href='https://github.com/samrmay'>https://github.com/samrmay</a>
             </div>
         )
     }
