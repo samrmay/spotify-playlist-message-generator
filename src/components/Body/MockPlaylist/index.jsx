@@ -1,6 +1,7 @@
 import React from 'react'
 import SongEntry from './SongEntry'
 import TextField from '../TextField'
+import {createPlaylist, getUserId} from '../../../services/spotify'
 import styles from './styles.css'
 
 class MockPlaylist extends React.Component {
@@ -12,6 +13,7 @@ class MockPlaylist extends React.Component {
         this.handleChange = this.handleChange.bind(this)
         this.redirectAuthURL = this.redirectAuthURL.bind(this)
         this.savePlaylistToStorage = this.savePlaylistToStorage.bind(this)
+        this.handleCreatePlaylist = this.handleCreatePlaylist.bind(this)
     }
 
     componentDidMount() {
@@ -28,11 +30,12 @@ class MockPlaylist extends React.Component {
     }
 
     savePlaylistToStorage() {
-        const {songs} = this.props
+        let {songs} = this.props
         const {playlistTitle} = this.state
 
         localStorage.clear()
         localStorage.setItem('playlistTitle', playlistTitle)
+        songs = songs.filter(item => item)
         for (let i in songs) {
             localStorage.setItem(`song#${i}`, JSON.stringify(songs[i]))
         }
@@ -40,12 +43,23 @@ class MockPlaylist extends React.Component {
 
     redirectAuthURL() {
         let authURL = `${process.env.SPOTIFY_ACCOUNTS}authorize?client_id=${process.env.SPOTIFY_CLIENT_ID}`
-        const scopes = 'scope=playlist-modify-private'
+        const scopes = 'scope=playlist-modify-private%20playlist-modify-public'
         const responseType = 'response_type=token'
         const redirect = `redirect_uri=${process.env.REDIRECT_URI}`
         authURL += `&${scopes}&${responseType}&${redirect}`
         this.savePlaylistToStorage()
         location.href = authURL
+    }
+
+    handleCreatePlaylist() {
+        const {userAccessToken, songs} = this.props
+        const {playlistTitle} = this.state
+        getUserId(userAccessToken).then(response => {
+            createPlaylist(playlistTitle, songs, userAccessToken, response).then(response => {
+                console.log(response)
+            })
+        })
+        
     }
 
     render() {
@@ -62,7 +76,7 @@ class MockPlaylist extends React.Component {
 
         let actionButton = actionButton = <button onClick={this.redirectAuthURL}>Allow access</button>
         if (userAccessToken) {
-            actionButton = <button onClick={this.createPlaylist}>Create playlist</button>
+            actionButton = <button onClick={this.handleCreatePlaylist}>Create playlist</button>
         }
 
         return(

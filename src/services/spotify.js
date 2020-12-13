@@ -145,3 +145,46 @@ export function parseSequence(message) {
   message = generatePolymorphisms(message.toLowerCase());
   return message.split(" ").filter((item) => item.length > 0);
 }
+
+export function getUserId(userAccessToken) {
+  return fetch(process.env.SPOTIFY_API + "me", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${userAccessToken}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((response) => response.id);
+}
+
+export async function createPlaylist(name, songs, userAccessToken, userId) {
+  const playlist = await fetch(
+    process.env.SPOTIFY_API + `users/${userId}/playlists`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${userAccessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name }),
+    }
+  ).then((response) => response.json());
+
+  if (playlist.error) {
+    return { error: playlist.error };
+  }
+
+  const body = songs.map((item) => item.uri);
+
+  return await fetch(
+    process.env.SPOTIFY_API + `playlists/${playlist.id}/tracks`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${userAccessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ uris: body }),
+    }
+  ).then((response) => response.json());
+}
