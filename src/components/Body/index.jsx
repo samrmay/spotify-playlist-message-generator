@@ -17,7 +17,7 @@ class Body extends React.Component {
         }
         this.handleChange = this.handleChange.bind(this)
         this.getAccess = this.getAccess.bind(this)
-        this.searchSong = this.searchSong.bind(this)
+        this.searchMessage = this.searchMessage.bind(this)
     }
 
     handleChange(name, value) {
@@ -31,20 +31,46 @@ class Body extends React.Component {
         })
     }
 
-    searchSong() {
-        this.setState({songsReturned: [], spotifyQueried: true, goClicked: true})
-        this.getAccess().then(token => {
-            let {message} = this.state
-            message = parseSequence(message)
-            const newArr = []
-            for (let _ in message) {
-                newArr.push(null)
+    async searchBatch(batch, token) {
+        console.log(batch)
+        const promises = []
+        for (let i in batch) {
+            promises.push(findExactMatch(batch[i], token))
+        }
+        const results = await Promise.all(promises)
+        for (let i in results) {
+            if (results[i].error) {
+                return {error: true}
             }
-            for (let i in message) {
-                findExactMatch(message[i], token).then(response => {
-                    newArr[i] = response
-                    this.setState({songsReturned: newArr})
-                })
+        }
+        this.setState(prevState => {
+            const newArr = prevState.songsReturned
+            for (let i in results) {
+                newArr.push(results[i].item)
+            }
+            return {songsReturned: newArr}
+        })
+        return {error: false}
+    }
+
+    async searchMessage() {
+        this.setState({songsReturned: [], spotifyQueried: true, goClicked: true})
+        this.getAccess().then(async (token) => {
+            const message = parseSequence(this.state.message)
+            const batSize = 5
+
+            const maxi = Math.ceil(message.length/batSize)*batSize
+            for (let i = 1;i<maxi;i += batSize) {
+                const upper = batSize > message.length ? message.length : batSize
+                const batch = message.splice(0, upper)
+                const error = await this.searchBatch(batch, token)
+                await sleep(2500)
+                if (error.error) {
+                    console.log('error')
+                    await sleep(5000)
+                    console.log('timeout finished')
+                    await this.searchBatch(batch, token)
+                }
             }
             this.setState({goClicked: false})
         })
@@ -66,7 +92,7 @@ class Body extends React.Component {
                 <LoadingButton 
                     content='go' 
                     width='100px' 
-                    handleClick={this.searchSong}
+                    handleClick={this.searchMessage}
                     wasClicked={this.state.goClicked}/>
                 <hr />
                 {spotifyQueried ? <MockPlaylist songs={songsReturned} standby={true}/> : null}
@@ -76,3 +102,12 @@ class Body extends React.Component {
 }
 
 export default Body
+
+
+function timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+async function sleep(ms) {
+    await timeout(ms);
+    return null;
+}

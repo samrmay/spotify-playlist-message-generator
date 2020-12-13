@@ -91,13 +91,16 @@ export async function findExactMatch(word, token) {
   const queryResults = await Promise.all(promises);
 
   for (let i in queryResults) {
+    if (queryResults[i].error) {
+      return { error: true, item: null };
+    }
     const result = findMatch(word, queryResults[i].tracks);
     if (result.item) {
-      return result.item;
+      return { error: false, item: result.item };
     }
   }
 
-  return null;
+  return { error: false, item: null };
 }
 
 function generatePolymorphisms(message) {
@@ -123,6 +126,7 @@ function generatePolymorphisms(message) {
     "don't": ["do not"],
     do: ["dew"],
     "doesn't": ["does not"],
+    "won't": ["will not"],
   };
 
   const keys = Object.keys(POLY_DICT);
@@ -133,7 +137,7 @@ function generatePolymorphisms(message) {
       POLY_DICT[key][Math.floor(Math.random() * POLY_DICT[key].length)];
     message = message.replace(patt, poly);
   }
-  message = message.replace(/[\.!,()\?]/gi, "");
+  message = message.replace(/[\.!,()\?:]/gi, "");
   return message;
 }
 
