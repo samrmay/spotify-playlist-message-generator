@@ -11,7 +11,7 @@ if (process.env.NODE_ENV !== "production") {
   const Dotenv = require("dotenv-webpack");
   plugins.push(new Dotenv());
 }
-console.log(plugins);
+
 module.exports = {
   entry: [path.resolve(__dirname, "src", "index.jsx")],
   output: {
