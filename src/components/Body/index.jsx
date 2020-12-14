@@ -84,11 +84,9 @@ class Body extends React.Component {
                 const upper = batSize > message.length ? message.length : batSize
                 const batch = message.splice(0, upper)
                 const error = await this.searchBatch(batch, token)
-                await sleep(5000)
+                await sleep(7500)
                 if (error.error) {
-                    console.log('error')
                     await sleep(5000)
-                    console.log('timeout finished')
                     await this.searchBatch(batch, token)
                 }
             }
