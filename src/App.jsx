@@ -3,8 +3,6 @@ import Header from './components/Header'
 import Body from './components/Body'
 import Footer from './components/Footer'
 
-import {getAccessToken} from './services/spotify'
-
 class App extends React.Component {
     constructor() {
         super()
