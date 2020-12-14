@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
-    "dev": "webpack-dev-server --hot --mode development"
+    "dev": "webpack-dev-server --hot --mode development",
+    "start": "serve dist"
   },
   "author": "",
   "license": "ISC",
@@ -13,7 +14,8 @@
     "@babel/runtime": "^7.12.5",
     "dotenv": "^8.2.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "serve": "^11.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",
