@@ -1,8 +1,6 @@
-## React template using ES6
+## Playlist message generator for spotify
 
-- clone git repo
-- `npm i` to install dependencies
-- `npm run development` to open in development environment
-- `npm run build` to create production build
+Generate a playlist comprised of single title songs that create a message.
+Example: EXAMPLE HERE
 
 ### Author: Sam May
