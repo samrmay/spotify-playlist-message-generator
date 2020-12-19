@@ -148,17 +148,6 @@ export function parseSequence(message) {
   return message.split(" ").filter((item) => item.length > 0);
 }
 
-export function getUserId(userAccessToken) {
-  return fetch(process.env.SPOTIFY_API + "me", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${userAccessToken}`,
-    },
-  })
-    .then((response) => response.json())
-    .then((response) => response.id);
-}
-
 export async function createPlaylist(name, songs, userAccessToken, userId) {
   const playlist = await fetch(
     process.env.SPOTIFY_API + `users/${userId}/playlists`,

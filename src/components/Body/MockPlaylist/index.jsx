@@ -2,7 +2,8 @@ import React from 'react'
 import SongEntry from './SongEntry'
 import TextField from '../TextField'
 import LoadingButton from '../LoadingButton'
-import {createPlaylist, getUserId} from '../../../services/spotify'
+import {createPlaylist} from '../../../services/spotify'
+import {getRedirectURL, getUserId} from '../../../services/backend'
 import styles from './styles.css'
 
 class MockPlaylist extends React.Component {
@@ -44,12 +45,8 @@ class MockPlaylist extends React.Component {
         }
     }
 
-    redirectAuthURL() {
-        let authURL = `${process.env.SPOTIFY_ACCOUNTS}authorize?client_id=${process.env.SPOTIFY_CLIENT_ID}`
-        const scopes = 'scope=playlist-modify-private%20playlist-modify-public'
-        const responseType = 'response_type=token'
-        const redirect = `redirect_uri=${process.env.REDIRECT_URI}`
-        authURL += `&${scopes}&${responseType}&${redirect}`
+    async redirectAuthURL() {
+        const authURL = await getRedirectURL()
         this.savePlaylistToStorage()
         location.href = authURL
     }
