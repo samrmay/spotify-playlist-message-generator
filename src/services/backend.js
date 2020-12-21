@@ -9,3 +9,18 @@ export function getUserId(userAccessToken) {
     method: "GET",
   });
 }
+
+export function getWordEntry(word) {
+  return fetch(process.env.API_URL + "wordEntries/search/" + word, {
+    method: "GET",
+  });
+}
+
+export function getSingleTrack(wordEntry) {
+  return fetch(
+    process.env.API_URL + "wordEntries/singleTrack" + wordEntry._id,
+    {
+      method: "GET",
+    }
+  );
+}
