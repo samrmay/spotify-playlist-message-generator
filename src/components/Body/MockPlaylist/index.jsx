@@ -46,7 +46,7 @@ class MockPlaylist extends React.Component {
     }
 
     async redirectAuthURL() {
-        const authURL = await getRedirectURL()
+        const {authURL} = await getRedirectURL()
         this.savePlaylistToStorage()
         location.href = authURL
     }

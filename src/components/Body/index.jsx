@@ -2,7 +2,8 @@ import React from 'react'
 import MockPlaylist from './MockPlaylist'
 import TextField from './TextField'
 import LoadingButton from './LoadingButton'
-import {getAccessToken, parseSequence, findExactMatch} from '../../services/spotify'
+import {parseSequence} from '../../services/spotify'
+import {getWordEntry, getSingleTrack} from '../../services/backend'
 import styles from './styles.css'
 
 class Body extends React.Component {
@@ -17,7 +18,6 @@ class Body extends React.Component {
             userAccessToken: null
         }
         this.handleChange = this.handleChange.bind(this)
-        this.getAccess = this.getAccess.bind(this)
         this.searchMessage = this.searchMessage.bind(this)
     }
 
@@ -44,54 +44,16 @@ class Body extends React.Component {
         this.setState({[name]: value})
     }
 
-    getAccess() {
-        return getAccessToken().then(response => {
-            this.setState({accessToken: response.access_token})
-            return response.access_token
-        })
-    }
-
-    async searchBatch(batch, token) {
-        const promises = []
-        for (let i in batch) {
-            promises.push(findExactMatch(batch[i], token))
-        }
-        const results = await Promise.all(promises)
-        for (let i in results) {
-            if (results[i].error) {
-                return {error: true}
-            }
-        }
-        this.setState(prevState => {
-            const newArr = prevState.songsReturned
-            for (let i in results) {
-                newArr.push(results[i].item)
-            }
-            return {songsReturned: newArr}
-        })
-        return {error: false}
-    }
-
     async searchMessage() {
         localStorage.clear()
         this.setState({songsReturned: [], spotifyQueried: true, goClicked: true})
-        this.getAccess().then(async (token) => {
-            const message = parseSequence(this.state.message)
-            const batSize = 5
 
-            const maxi = Math.ceil(message.length/batSize)*batSize
-            for (let i = 1;i<maxi;i += batSize) {
-                const upper = batSize > message.length ? message.length : batSize
-                const batch = message.splice(0, upper)
-                const error = await this.searchBatch(batch, token)
-                await sleep(7500)
-                if (error.error) {
-                    await sleep(5000)
-                    await this.searchBatch(batch, token)
-                }
-            }
-            this.setState({goClicked: false})
-        })
+        const message = parseSequence(this.state.message)
+        const entryPromises = message.map(item => getWordEntry(item))
+        const wordEntryIDs = await Promise.all(entryPromises)
+        const trackPromises = wordEntryIDs.map(item => getSingleTrack(item))
+        const tracks = await Promise.all(trackPromises)
+        this.setState({songsReturned: tracks, goClicked: false})
     }
 
     render() {
