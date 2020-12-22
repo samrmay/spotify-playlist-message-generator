@@ -2,8 +2,7 @@ import React from 'react'
 import SongEntry from './SongEntry'
 import TextField from '../TextField'
 import LoadingButton from '../LoadingButton'
-import {createPlaylist} from '../../../services/spotify'
-import {getRedirectURL, getUserId} from '../../../services/backend'
+import {getRedirectURL, getUserId, createPlaylist} from '../../../services/backend'
 import styles from './styles.css'
 
 class MockPlaylist extends React.Component {
@@ -51,18 +50,15 @@ class MockPlaylist extends React.Component {
         location.href = authURL
     }
 
-    handleCreatePlaylist() {
+    async handleCreatePlaylist() {
         const {userAccessToken, songs} = this.props
         const {playlistTitle} = this.state
         this.setState({playlistCreating: true})
-        getUserId(userAccessToken).then(response => {
-            createPlaylist(playlistTitle, songs, userAccessToken, response).then(response => {
-                if (response.playlist) {
-                    this.setState({playlistCreated: true, playlist: response.playlist, playlistCreating: false})
-                }
-            })
-        })
-        
+        const result = await createPlaylist(userAccessToken, songs, playlistTitle)
+        if (result.href) {
+            this.setState({playlistCreated: true, playlist: result.playlist, playlistCreating: false})
+            localStorage.clear()
+        }
     }
 
     render() {

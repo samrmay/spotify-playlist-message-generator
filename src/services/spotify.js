@@ -1,5 +1,3 @@
-import shuffleArr from "./shuffleArr";
-
 export function getAccessToken() {
   const authString =
     "Basic " +
@@ -22,36 +20,40 @@ export function parseSequence(message) {
   return message.split(" ").filter((item) => item.length > 0);
 }
 
-export async function createPlaylist(name, songs, userAccessToken, userId) {
-  const playlist = await fetch(
-    process.env.SPOTIFY_API + `users/${userId}/playlists`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${userAccessToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name }),
-    }
-  ).then((response) => response.json());
+function generatePolymorphisms(message) {
+  const POLY_DICT = {
+    "is a": ["issa"],
+    "got to": ["gotta"],
+    "i've": ["i have"],
+    im: ["i am"],
+    "i'm": ["i am"],
+    a: ["ay"],
+    for: ["4", "foor"],
+    to: ["too"],
+    2: ["too"],
+    the: ["dah", "duh"],
+    and: ["anne"],
+    be: ["bee"],
+    "&": ["anne"],
+    have: ["haf", "hav"],
+    app: ["application"],
+    "you're": ["ur"],
+    your: ["ur"],
+    in: [""],
+    "don't": ["do not"],
+    do: ["dew"],
+    "doesn't": ["does not"],
+    "won't": ["will not"],
+  };
 
-  if (playlist.error) {
-    return { error: playlist.error };
+  const keys = Object.keys(POLY_DICT);
+  for (let i in keys) {
+    const key = keys[i];
+    const patt = new RegExp(`\\b${key}\\b`, "gi");
+    const poly =
+      POLY_DICT[key][Math.floor(Math.random() * POLY_DICT[key].length)];
+    message = message.replace(patt, poly);
   }
-
-  const body = songs.map((item) => item.uri);
-  const maxi = Math.ceil(body.length / 100) * 100;
-  for (let i = 1; i < maxi; i += 100) {
-    const upper = 100 > body.length ? body.length : 100;
-    const batch = body.splice(0, upper);
-    await fetch(process.env.SPOTIFY_API + `playlists/${playlist.id}/tracks`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${userAccessToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ uris: batch }),
-    });
-  }
-  return { error: null, playlist: playlist };
+  message = message.replace(/[\.!,()\?:"']/gi, "");
+  return message;
 }
