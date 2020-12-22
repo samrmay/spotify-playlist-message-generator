@@ -58,7 +58,7 @@ class Body extends React.Component {
         const message = parseSequence(this.state.message)
         const entryPromises = message.map(item => getWordEntry(item))
         const wordEntryIDs = await Promise.all(entryPromises)
-        const trackPromises = wordEntryIDs.map(item => getSingleTrack(item))
+        const trackPromises = wordEntryIDs.map(item => getSingleTrack(item || ''))
         const tracks = await Promise.all(trackPromises)
         this.setState({songsReturned: tracks, goClicked: false})
     }

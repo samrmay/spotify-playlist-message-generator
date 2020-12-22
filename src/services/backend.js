@@ -10,16 +10,39 @@ export function getUserId(userAccessToken) {
   }).then((response) => response.json());
 }
 
-export function getWordEntry(word) {
-  return fetch(process.env.API_URL + "wordEntries/search/" + word, {
-    method: "GET",
-  }).then((response) => response.json());
+export async function getWordEntry(word) {
+  const response = await fetch(
+    process.env.API_URL + "wordEntries/search/" + word,
+    {
+      method: "GET",
+    }
+  );
+
+  if (response.status == 404) {
+    // post word and return that new word entry
+    const newWordEntry = await fetch(process.env.API_URL + "wordEntries", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ word }),
+    }).then((response) => response.json());
+    return newWordEntry._id;
+  } else {
+    return response.json();
+  }
 }
 
 export function getSingleTrack(id) {
   return fetch(process.env.API_URL + "wordEntries/singleTrack/" + id, {
     method: "GET",
-  }).then((response) => response.json());
+  }).then((response) => {
+    if (response.status == 200 || response.status == 201) {
+      return response.json();
+    } else {
+      return null;
+    }
+  });
 }
 
 export function createPlaylist(userAccessToken, tracks, playlistTitle) {
