@@ -15,7 +15,8 @@ class Body extends React.Component {
             spotifyQueried: false,
             songsReturned: [],
             goClicked: false,
-            userAccessToken: null
+            userAccessToken: null,
+            messageError: false
         }
         this.handleChange = this.handleChange.bind(this)
         this.searchMessage = this.searchMessage.bind(this)
@@ -41,10 +42,16 @@ class Body extends React.Component {
     }
 
     handleChange(name, value) {
-        this.setState({[name]: value})
+        this.setState({[name]: value, messageError: false})
     }
 
     async searchMessage() {
+        // Check for empty message
+        if (this.state.message == '') {
+            this.setState({messageError: true})
+            return
+        }
+
         localStorage.clear()
         this.setState({songsReturned: [], spotifyQueried: true, goClicked: true})
 
@@ -57,7 +64,7 @@ class Body extends React.Component {
     }
 
     render() {
-        const {spotifyQueried, songsReturned, message, userAccessToken} = this.state
+        const {spotifyQueried, songsReturned, message, userAccessToken, messageError} = this.state
         return(
             <div>
                 <div className={styles.inputContainer}>
@@ -67,7 +74,8 @@ class Body extends React.Component {
                         placeholder='Type your message here.'
                         height='100px'
                         width='400px'
-                        value={message}/>
+                        value={message}
+                        error={messageError}/>
                 </div>
                 <br />
                 <div className={styles.buttonContainer}>

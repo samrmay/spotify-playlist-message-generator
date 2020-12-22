@@ -10,6 +10,7 @@ class MockPlaylist extends React.Component {
         super(props)
         this.state = {
             playlistTitle: '',
+            playlistTitleError: false,
             playlistCreated: false,
             playlistCreating: false
         }
@@ -29,7 +30,7 @@ class MockPlaylist extends React.Component {
     }
 
     handleChange(name, value) {
-        this.setState({[name]: value})
+        this.setState({[name]: value, playlistTitleError: false})
     }
 
     savePlaylistToStorage() {
@@ -53,6 +54,12 @@ class MockPlaylist extends React.Component {
     async handleCreatePlaylist() {
         const {userAccessToken, songs} = this.props
         const {playlistTitle} = this.state
+
+        if (playlistTitle == '') {
+            this.setState({playlistTitleError: true})
+            return
+        }
+
         this.setState({playlistCreating: true})
         const result = await createPlaylist(userAccessToken, songs, playlistTitle)
         if (result.href) {
@@ -63,6 +70,7 @@ class MockPlaylist extends React.Component {
 
     render() {
         const {songs, userAccessToken} = this.props
+        const {playlistTitle, playlistTitleError, playlistCreated} = this.state
         let songEntryArr = null
         if (songs.length > 0) {
             songEntryArr = []
@@ -85,15 +93,16 @@ class MockPlaylist extends React.Component {
                         width='300px' 
                         name='playlistTitle'
                         placeholder='my sick new playlist'
-                        value={this.state.playlistTitle}
-                        handleChange={this.handleChange}/>
+                        value={playlistTitle}
+                        handleChange={this.handleChange}
+                        error={playlistTitleError}/>
                 </div>
                 <SongEntry header={true} />
                 <div className={styles.songsContainer}>
                     {songEntryArr ? songEntryArr : <div>loading...</div>}
                 </div>
                 {actionButton}
-                {this.state.playlistCreated ? <div>playlist created</div> : null}
+                {playlistCreated ? <div>playlist created</div> : null}
             </div>
         )
     }
