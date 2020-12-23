@@ -12,7 +12,8 @@ class MockPlaylist extends React.Component {
             playlistTitle: '',
             playlistTitleError: false,
             playlistCreated: false,
-            playlistCreating: false
+            playlistCreating: false,
+            playlist: null
         }
         this.handleChange = this.handleChange.bind(this)
         this.redirectAuthURL = this.redirectAuthURL.bind(this)
@@ -63,14 +64,15 @@ class MockPlaylist extends React.Component {
         this.setState({playlistCreating: true})
         const result = await createPlaylist(userAccessToken, songs, playlistTitle)
         if (result.href) {
-            this.setState({playlistCreated: true, playlist: result.playlist, playlistCreating: false})
+            this.setState({playlist: result, playlistCreated: true, playlistCreating: false})
             localStorage.clear()
         }
     }
 
     render() {
         const {songs, userAccessToken} = this.props
-        const {playlistTitle, playlistTitleError, playlistCreated} = this.state
+        const {playlistTitle, playlistTitleError, playlistCreated, playlist} = this.state
+        console.log(playlist)
         let songEntryArr = null
         if (songs.length > 0) {
             songEntryArr = []
@@ -102,7 +104,7 @@ class MockPlaylist extends React.Component {
                     {songEntryArr ? songEntryArr : <div>loading...</div>}
                 </div>
                 {actionButton}
-                {playlistCreated ? <div>playlist created</div> : null}
+                {playlistCreated ? <div><a href={playlist.external_urls.spotify}>View playlist</a></div> : null}
             </div>
         )
     }

@@ -8,7 +8,7 @@ class Header extends React.Component {
     render() {
         return(
             <div>
-                <h3>Playlist Mesage Generator for Spotify ;)</h3>
+                <h3>Playlist Message Generator for Spotify ;)</h3>
             </div>
         )
     }
