@@ -62,7 +62,7 @@ class MockPlaylist extends React.Component {
         }
 
         this.setState({playlistCreating: true})
-        const result = await createPlaylist(userAccessToken, songs, playlistTitle)
+        const result = await createPlaylist(userAccessToken, songs.map(item => item.track), playlistTitle)
         if (result.href) {
             this.setState({playlist: result, playlistCreated: true, playlistCreating: false})
             localStorage.clear()
@@ -72,13 +72,12 @@ class MockPlaylist extends React.Component {
     render() {
         const {songs, userAccessToken} = this.props
         const {playlistTitle, playlistTitleError, playlistCreated, playlist} = this.state
-        console.log(playlist)
         let songEntryArr = null
         if (songs.length > 0) {
             songEntryArr = []
             for (let i in songs) {
                 if (songs[i] !== null) {
-                    songEntryArr.push(<SongEntry song={songs[i]} key={i}/>)
+                    songEntryArr.push(<SongEntry song={songs[i].track} key={i}/>)
                 }
             }
         }

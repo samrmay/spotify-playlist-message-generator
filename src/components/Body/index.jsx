@@ -13,36 +13,46 @@ class Body extends React.Component {
             message: '',
             accessToken: '',
             spotifyQueried: false,
-            songsReturned: [],
+            tracksObjs: [],
             goClicked: false,
             userAccessToken: null,
             messageError: false
         }
         this.handleChange = this.handleChange.bind(this)
         this.searchMessage = this.searchMessage.bind(this)
+        this.handleTrackRefresh = this.handleTrackRefresh.bind(this)
     }
 
     componentDidMount() {
         if (window.location.hash) {
             const userAccessToken = window.location.hash.match(/access_token=(.+)&token_type/)[1]
-            const songsReturned = []
+            const trackObjs = []
             let i = 0
             while (true) {
                 const song = JSON.parse(localStorage.getItem(`song#${i}`))
                 if (song) {
-                    songsReturned.push(song)
+                    trackObjs.push(song)
                 } else {
                     break
                 }
                 i += 1
             }
 
-            this.setState({userAccessToken, songsReturned, spotifyQueried: true})
+            this.setState({userAccessToken, trackObjs, spotifyQueried: true})
         }
     }
 
     handleChange(name, value) {
         this.setState({[name]: value, messageError: false})
+    }
+
+    async searchWord(word) {
+        const entry = await getWordEntry(word)
+        return getSingleTrack(entry || '')
+    }
+
+    async handleTrackRefresh(index) {
+        const {trackObjs} = this.state
     }
 
     async searchMessage() {
@@ -53,18 +63,16 @@ class Body extends React.Component {
         }
 
         localStorage.clear()
-        this.setState({songsReturned: [], spotifyQueried: true, goClicked: true})
-
+        this.setState({trackObjs: [], spotifyQueried: true, goClicked: true})
         const message = parseSequence(this.state.message)
-        const entryPromises = message.map(item => getWordEntry(item))
-        const wordEntryIDs = await Promise.all(entryPromises)
-        const trackPromises = wordEntryIDs.map(item => getSingleTrack(item || ''))
+        const trackPromises = message.map(item => this.searchWord(item))
         const tracks = await Promise.all(trackPromises)
-        this.setState({songsReturned: tracks, goClicked: false})
+        const trackObjs = tracks.map((item, index) => {return {track: item, word: message[index]}})
+        this.setState({trackObjs, goClicked: false})
     }
 
     render() {
-        const {spotifyQueried, songsReturned, message, userAccessToken, messageError} = this.state
+        const {spotifyQueried, trackObjs, message, userAccessToken, messageError} = this.state
         return(
             <div>
                 <div className={styles.inputContainer}>
@@ -88,7 +96,7 @@ class Body extends React.Component {
                 <hr />
                 {spotifyQueried ? 
                 <MockPlaylist 
-                    songs={songsReturned} 
+                    songs={trackObjs} 
                     standby={true}
                     userAccessToken={userAccessToken}/> : null}
             </div>
