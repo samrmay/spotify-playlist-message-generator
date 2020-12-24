@@ -1,9 +1,14 @@
 import React from 'react'
+import LoadingButton from '../../LoadingButton'
+import refreshIcon from '../../../../assets/refreshIcon.svg'
 import styles from './styles.css'
 
 class SongEntry extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            refreshing: false
+        }
         this.handleRefresh = this.handleRefresh.bind(this)
     }
 
@@ -19,6 +24,7 @@ class SongEntry extends React.Component {
     }
 
     handleRefresh() {
+        this.setState({refreshing: true})
         this.props.refreshEntry(this.props.index)
     }
 
@@ -30,8 +36,18 @@ class SongEntry extends React.Component {
             return(
             <div className={styles.songEntryContainer}>
                 <div className={styles.songName}>{name}</div>
-                <div className={styles.artistsString}>{artistsString}</div>
-                <button onClick={this.handleRefresh}>refresh</button>
+                <div className={styles.artistsString}>
+                    {artistsString}
+                    <LoadingButton 
+                        content='new song' 
+                        handleClick={this.handleRefresh}
+                        width='35px'
+                        height='20px'
+                        fontSize='16px'
+                        SVG={refreshIcon}
+                        backgroundColor='darkgray'
+                        wasClicked={this.state.refreshing}/>
+                </div>
             </div>
             )
         } else {
@@ -50,5 +66,5 @@ export default SongEntry
 SongEntry.defaultProps = {
     header: false,
     index: -1,
-    // refreshEntry: () => {}
+    refreshEntry: () => {}
 }

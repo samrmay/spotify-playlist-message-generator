@@ -16,3 +16,9 @@
   padding: 5px;
   border-bottom: black solid 2px;
 }
+
+.artistsString {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

@@ -8,13 +8,20 @@ class LoadingButton extends React.Component {
   }
 
   render() {
-    const style = {width: this.props.width}
+    const {height, width, fontSize, SVG, handleClick, wasClicked, content, backgroundColor} = this.props
+    const style = {height, width, fontSize, backgroundColor}
+
+    const messageContent = SVG ? <div><SVG width='15px' alt={content}/></div> : <h5 className={styles.loadingButtonText}>{content}</h5>
+
     return (
-      <div className={styles.loadingButton} onClick={this.props.handleClick} style={style}>
-        {this.props.wasClicked ? (
-          <Loading className={styles.loadingButtonAnimation} alt="Loading..." />
+      <div className={styles.loadingButton} onClick={handleClick} style={style}>
+        {wasClicked ? (
+          <Loading 
+            className={styles.loadingButtonAnimation} 
+            alt="Loading..."
+            width={height} />
         ) : (
-          <h5 className={styles.loadingButtonText}>{this.props.content}</h5>
+          messageContent
         )}
       </div>
     );
@@ -25,7 +32,11 @@ LoadingButton.defaultProps = {
   content: 'Loading Button',
   wasClicked: false,
   handleClick: (event) => '',
-  width: '100%'
+  width: '100%',
+  height: '50px',
+  fontSize: '20px',
+  SVG: null,
+  backgroundColor: 'black'
 };
 
 export default LoadingButton;

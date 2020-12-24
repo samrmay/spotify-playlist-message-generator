@@ -80,7 +80,7 @@ class MockPlaylist extends React.Component {
                     songEntryArr.push(
                         <SongEntry 
                             song={songs[i].track} 
-                            key={i} 
+                            key={`${songs[i].track.id}${Date.now()}`} 
                             index={i} 
                             refreshEntry={handleTrackRefresh}/>
                     )

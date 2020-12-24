@@ -1,13 +1,10 @@
 .loadingButton {
-  background-color: black;
   color: white;
-  height: 50px;
   text-align: center;
   align-self: center;
   border-radius: 5px;
   margin: 5px;
   cursor: pointer;
-  font-size: 20px;
   padding: 5px;
 }
 
@@ -16,5 +13,5 @@
 }
 
 .loadingButtonAnimation {
-  padding-top: 10px;
+  margin: auto auto;
 }
