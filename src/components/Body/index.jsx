@@ -53,6 +53,10 @@ class Body extends React.Component {
 
     async handleTrackRefresh(index) {
         const {trackObjs} = this.state
+        const {word} = trackObjs[index]
+        const newTrack = await this.searchWord(word)
+        trackObjs.splice(index, 1, {word, track: newTrack})
+        this.setState({trackObjs})
     }
 
     async searchMessage() {
@@ -98,7 +102,8 @@ class Body extends React.Component {
                 <MockPlaylist 
                     songs={trackObjs} 
                     standby={true}
-                    userAccessToken={userAccessToken}/> : null}
+                    userAccessToken={userAccessToken}
+                    handleTrackRefresh={this.handleTrackRefresh}/> : null}
             </div>
         )
     }

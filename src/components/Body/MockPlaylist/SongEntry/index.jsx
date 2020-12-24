@@ -4,6 +4,7 @@ import styles from './styles.css'
 class SongEntry extends React.Component {
     constructor(props) {
         super(props)
+        this.handleRefresh = this.handleRefresh.bind(this)
     }
 
     stringifyArtists(artists) {
@@ -17,6 +18,10 @@ class SongEntry extends React.Component {
         return result
     }
 
+    handleRefresh() {
+        this.props.refreshEntry(this.props.index)
+    }
+
     render() {
         if (!this.props.header) {
             const {song} = this.props
@@ -26,6 +31,7 @@ class SongEntry extends React.Component {
             <div className={styles.songEntryContainer}>
                 <div className={styles.songName}>{name}</div>
                 <div className={styles.artistsString}>{artistsString}</div>
+                <button onClick={this.handleRefresh}>refresh</button>
             </div>
             )
         } else {
@@ -43,4 +49,6 @@ export default SongEntry
 
 SongEntry.defaultProps = {
     header: false,
+    index: -1,
+    // refreshEntry: () => {}
 }

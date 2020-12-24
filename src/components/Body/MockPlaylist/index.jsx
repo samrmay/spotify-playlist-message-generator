@@ -70,14 +70,20 @@ class MockPlaylist extends React.Component {
     }
 
     render() {
-        const {songs, userAccessToken} = this.props
+        const {songs, userAccessToken, handleTrackRefresh} = this.props
         const {playlistTitle, playlistTitleError, playlistCreated, playlist} = this.state
         let songEntryArr = null
         if (songs.length > 0) {
             songEntryArr = []
             for (let i in songs) {
-                if (songs[i] !== null) {
-                    songEntryArr.push(<SongEntry song={songs[i].track} key={i}/>)
+                if (songs[i].track !== null) {
+                    songEntryArr.push(
+                        <SongEntry 
+                            song={songs[i].track} 
+                            key={i} 
+                            index={i} 
+                            refreshEntry={handleTrackRefresh}/>
+                    )
                 }
             }
         }
