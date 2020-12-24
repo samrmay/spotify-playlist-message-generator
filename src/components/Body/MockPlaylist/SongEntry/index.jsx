@@ -54,7 +54,7 @@ class SongEntry extends React.Component {
             return(
                 <div className={styles.headerContainer}>
                     <div className={styles.songName}>Title</div>
-                    <div className={styles.artistsString}>Artists</div>
+                    <div className={styles.artistsString}>Artists<div>new song</div></div>
                 </div>
             )
         }

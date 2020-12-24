@@ -1,8 +1,9 @@
 import React from 'react'
 import SongEntry from './SongEntry'
+import AuthModal from './AuthModal'
 import TextField from '../TextField'
 import LoadingButton from '../LoadingButton'
-import {getRedirectURL, getUserId, createPlaylist} from '../../../services/backend'
+import {getRedirectURL, createPlaylist} from '../../../services/backend'
 import styles from './styles.css'
 
 class MockPlaylist extends React.Component {
@@ -13,10 +14,12 @@ class MockPlaylist extends React.Component {
             playlistTitleError: false,
             playlistCreated: false,
             playlistCreating: false,
-            playlist: null
+            playlist: null,
+            authURL: null
         }
         this.handleChange = this.handleChange.bind(this)
-        this.redirectAuthURL = this.redirectAuthURL.bind(this)
+        this.showAuthModal = this.showAuthModal.bind(this)
+        this.handleModalSkip = this.handleModalSkip.bind(this)
         this.savePlaylistToStorage = this.savePlaylistToStorage.bind(this)
         this.handleCreatePlaylist = this.handleCreatePlaylist.bind(this)
     }
@@ -46,10 +49,14 @@ class MockPlaylist extends React.Component {
         }
     }
 
-    async redirectAuthURL() {
+    async showAuthModal() {
         const {authURL} = await getRedirectURL()
         this.savePlaylistToStorage()
-        location.href = authURL
+        this.setState({authURL})
+    }
+
+    handleModalSkip() {
+        this.setState({authURL: null})
     }
 
     async handleCreatePlaylist() {
@@ -71,7 +78,7 @@ class MockPlaylist extends React.Component {
 
     render() {
         const {songs, userAccessToken, handleTrackRefresh} = this.props
-        const {playlistTitle, playlistTitleError, playlistCreated, playlist} = this.state
+        const {playlistTitle, playlistTitleError, playlistCreated, playlist, authURL} = this.state
         let songEntryArr = null
         if (songs.length > 0) {
             songEntryArr = []
@@ -88,13 +95,14 @@ class MockPlaylist extends React.Component {
             }
         }
 
-        let actionButton = actionButton = <LoadingButton content='allow access' handleClick={this.redirectAuthURL} width='100px'/>
+        let actionButton = actionButton = <LoadingButton content='save playlist' handleClick={this.showAuthModal} width='100px'/>
         if (userAccessToken) {
             actionButton = <LoadingButton content='create playlist' handleClick={this.handleCreatePlaylist} width='150px' wasClicked={this.state.playlistCreating}/>
         }
 
         return(
             <div className={styles.playlistContainer}>
+                {authURL ? <AuthModal authLink={authURL} handleSkip={this.handleModalSkip}/> : null}
                 <div className={styles.playlistTitleContainer}>
                     <TextField 
                         width='300px' 
