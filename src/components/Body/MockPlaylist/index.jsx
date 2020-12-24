@@ -18,10 +18,10 @@ class MockPlaylist extends React.Component {
             authURL: null
         }
         this.handleChange = this.handleChange.bind(this)
-        this.showAuthModal = this.showAuthModal.bind(this)
-        this.handleModalSkip = this.handleModalSkip.bind(this)
         this.savePlaylistToStorage = this.savePlaylistToStorage.bind(this)
         this.handleCreatePlaylist = this.handleCreatePlaylist.bind(this)
+        this.showAuthModal = this.showAuthModal.bind(this)
+        this.handleModalSkip = this.handleModalSkip.bind(this)
     }
 
     componentDidMount() {
@@ -49,16 +49,6 @@ class MockPlaylist extends React.Component {
         }
     }
 
-    async showAuthModal() {
-        const {authURL} = await getRedirectURL()
-        this.savePlaylistToStorage()
-        this.setState({authURL})
-    }
-
-    handleModalSkip() {
-        this.setState({authURL: null})
-    }
-
     async handleCreatePlaylist() {
         const {userAccessToken, songs} = this.props
         const {playlistTitle} = this.state
@@ -74,6 +64,16 @@ class MockPlaylist extends React.Component {
             this.setState({playlist: result, playlistCreated: true, playlistCreating: false})
             localStorage.clear()
         }
+    }
+    
+    async showAuthModal() {
+        const {authURL} = await getRedirectURL()
+        this.savePlaylistToStorage()
+        this.setState({authURL})
+    }
+
+    handleModalSkip() {
+        this.setState({authURL: null})
     }
 
     render() {
@@ -95,14 +95,23 @@ class MockPlaylist extends React.Component {
             }
         }
 
-        let actionButton = actionButton = <LoadingButton content='save playlist' handleClick={this.showAuthModal} width='100px'/>
+        let actionButton = <LoadingButton content='save playlist' handleClick={this.showAuthModal} width='100px'/>
         if (userAccessToken) {
             actionButton = <LoadingButton content='create playlist' handleClick={this.handleCreatePlaylist} width='150px' wasClicked={this.state.playlistCreating}/>
         }
 
         return(
             <div className={styles.playlistContainer}>
-                {authURL ? <AuthModal authLink={authURL} handleSkip={this.handleModalSkip}/> : null}
+                {authURL ? 
+                    <AuthModal 
+                        authLink={authURL} 
+                        handleSkip={this.handleModalSkip}
+                        instructions="We need to connect to Spotify to create your playlist.
+                        Alternatively feel free to search messages for fun, or manually create a playlist
+                        based on results."
+                        linkContent='Connect to Spotify'
+                        buttonContent="eh i'd rather not"/> : null}
+
                 <div className={styles.playlistTitleContainer}>
                     <TextField 
                         width='300px' 

@@ -7,13 +7,19 @@ class AuthModal extends React.Component {
     }
 
     render() {
+      const {authLink, instructions, linkContent, buttonContent} = this.props
+
         return (
           <div className={styles.authModalContainer}>
             <div className={styles.authModalWindow}>
-              <a href={this.props.authLink} className={styles.modalContentLink}>
-                Connect to Spotify
-              </a>
-              <button onClick={this.props.handleSkip}>wait until later</button>
+              <div className={styles.instructionsContainer}>{instructions}</div>
+              <br />
+              <div className={styles.optionsContainer}>
+                <a href={authLink} className={styles.modalContentLink}>
+                  {linkContent}
+                </a>  
+                <button onClick={this.props.handleSkip}>{buttonContent}</button>
+              </div>
             </div>
           </div>
         );
@@ -21,3 +27,10 @@ class AuthModal extends React.Component {
 }
 
 export default AuthModal
+
+AuthModal.defaultProps = {
+  authLink: 'https://www.google.com',
+  instructions: 'instructions',
+  linkContent: 'Go to google',
+  buttonContent: 'wait until later'
+}
