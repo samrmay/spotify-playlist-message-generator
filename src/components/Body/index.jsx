@@ -13,7 +13,7 @@ class Body extends React.Component {
             message: '',
             accessToken: '',
             spotifyQueried: false,
-            tracksObjs: [],
+            trackObjs: [],
             goClicked: false,
             userAccessToken: null,
             messageError: false
@@ -38,7 +38,10 @@ class Body extends React.Component {
                 i += 1
             }
 
-            this.setState({userAccessToken, trackObjs, spotifyQueried: true})
+            this.setState({userAccessToken})
+            if (trackObjs.length > 0) {
+                this.setState({trackObjs, spotifyQueried: true})
+            }
         }
     }
 
