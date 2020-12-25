@@ -1,6 +1,7 @@
 import React from 'react'
 import SongEntry from './SongEntry'
 import AuthModal from './AuthModal'
+import ShareMenu from './ShareMenu'
 import TextField from '../TextField'
 import LoadingButton from '../LoadingButton'
 import {getRedirectURL, createPlaylist} from '../../../services/backend'
@@ -61,6 +62,7 @@ class MockPlaylist extends React.Component {
         this.setState({playlistCreating: true})
         const result = await createPlaylist(userAccessToken, songs.map(item => item.track), playlistTitle)
         if (result.href) {
+            console.log(result)
             this.setState({playlist: result, playlistCreated: true, playlistCreating: false})
             localStorage.clear()
         }
@@ -126,7 +128,8 @@ class MockPlaylist extends React.Component {
                     {songEntryArr ? songEntryArr : <div>loading...</div>}
                 </div>
                 {actionButton}
-                {playlistCreated ? <div><a href={playlist.external_urls.spotify}>View playlist</a></div> : null}
+
+                {playlistCreated ? <ShareMenu playlist={playlist}/> : null}
             </div>
         )
     }
