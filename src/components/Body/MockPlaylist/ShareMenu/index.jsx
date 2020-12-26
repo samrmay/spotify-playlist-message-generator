@@ -1,4 +1,9 @@
 import React from 'react'
+import SvgLink from '../../../SvgLink'
+import spotifyIcon from '../../../../assets/spotifyIcon.svg'
+import facebookIcon from '../../../../assets/facebookIcon.svg'
+import twitterIcon from '../../../../assets/twitterIcon.svg'
+import messengerIcon from '../../../../assets/messengerIcon.svg'
 import styles from './styles.css'
 
 class ShareMenu extends React.Component {
@@ -15,10 +20,10 @@ class ShareMenu extends React.Component {
 
         return(
             <div className={styles.buttonMenu}>
-                <a href={viewLink} className={styles.shareLink}>view playlist</a>
-                <a href={facebookLink} className={styles.shareLink}>facebook</a>
-                <a href={twitterLink} className={styles.shareLink}>twitter</a>
-                <a href={messengerLink} className={styles.shareLink}>messenger</a>
+                <div className={styles.linkContainer}><SvgLink SVG={spotifyIcon} href={viewLink} alt='view playlist'/></div>
+                <div className={styles.linkContainer}><SvgLink SVG={facebookIcon} href={facebookLink} alt='facebook' newTab={true}/></div>
+                <div className={styles.linkContainer}><SvgLink SVG={twitterIcon} href={twitterLink} alt='twitter' newTab={true} /></div>
+                <div className={styles.linkContainer}><SvgLink SVG={messengerIcon} href={messengerLink} alt='messenger' newTab={true} /></div>
             </div>
         )
     }

@@ -1,0 +1,9 @@
+.svgContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.svg {
+  margin: auto auto;
+}
