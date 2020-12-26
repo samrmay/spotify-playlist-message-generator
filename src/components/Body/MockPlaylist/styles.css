@@ -1,12 +1,19 @@
 .playlistTitleContainer {
-  margin: 15px 0px 15px 0px;
+  margin: 5px 0px 15px 0px;
 }
 
 .playlistContainer {
   background-color: whitesmoke;
+  padding: 2px;
+  border-radius: 2%;
 }
 
 .songsContainer {
   overflow: auto;
   height: 300px;
+}
+
+.actionShareContainer {
+  display: flex;
+  justify-content: space-between;
 }

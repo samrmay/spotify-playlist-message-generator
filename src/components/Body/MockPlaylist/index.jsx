@@ -126,9 +126,11 @@ class MockPlaylist extends React.Component {
                 <div className={styles.songsContainer}>
                     {songEntryArr ? songEntryArr : <div>loading...</div>}
                 </div>
-                {actionButton}
 
-                {playlistCreated ? <ShareMenu playlist={playlist}/> : null}
+                <div className={styles.actionShareContainer}>
+                    {actionButton}
+                    {playlistCreated ? <ShareMenu playlist={playlist}/> : null}
+                </div>
             </div>
         )
     }
