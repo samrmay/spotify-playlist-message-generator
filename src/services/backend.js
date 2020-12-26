@@ -46,9 +46,11 @@ export function getSingleTrack(id) {
 }
 
 export function createPlaylist(userAccessToken, tracks, playlistTitle) {
+  const filterTracks = tracks.filter((item) => item);
+
   const body = {
     userAccessToken,
-    tracks,
+    tracks: filterTracks,
     playlistTitle,
   };
   return fetch(process.env.API_URL + "playlist", {

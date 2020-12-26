@@ -9,7 +9,7 @@ class Footer extends React.Component {
         return(
             <div>
                 A mini project by Sam May.
-                <a href='https://github.com/samrmay'> https://github.com/samrmay</a>
+                <a href='https://github.com/samrmay/spotify-playlist-message-generator'> https://github.com/samrmay/spotify-playlist-message-generator</a>
             </div>
         )
     }
