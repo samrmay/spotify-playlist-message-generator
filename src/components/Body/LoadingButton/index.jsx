@@ -5,7 +5,14 @@ import styles from './styles.css';
 class LoadingButton extends React.Component {
   constructor(props) {
     super(props);
+    this.handleKeyPress = this.handleKeyPress.bind(this)
   }
+
+  handleKeyPress(event) {
+    if(event.key === 'Enter') {
+      this.props.handleClick()
+    }
+  } 
 
   render() {
     const {height, width, fontSize, SVG, handleClick, wasClicked, content, backgroundColor} = this.props
@@ -17,7 +24,10 @@ class LoadingButton extends React.Component {
       <div 
         className={`${styles.loadingButton} ${styles[`loadingButton${backgroundColor}`]}`} 
         onClick={handleClick} 
-        style={style}>
+        style={style}
+        role='button'
+        tabIndex='0'
+        onKeyPress={this.handleKeyPress}>
         {wasClicked ? (
           <Loading 
             alt="Loading..."

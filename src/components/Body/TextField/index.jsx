@@ -4,16 +4,7 @@ import styles from './styles.css';
 class TextField extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isFocused: false,
-    };
     this.handleChange = this.handleChange.bind(this);
-    this.handleFocusBlur = this.handleFocusBlur.bind(this);
-  }
-
-  handleFocusBlur(event) {
-    const { type } = event;
-    this.setState({ isFocused: type == 'blur' ? false : true });
   }
 
   handleChange(event) {
@@ -35,8 +26,6 @@ class TextField extends React.Component {
           value={value}
           onChange={this.handleChange}
           type={isPassword ? 'password' : 'text'}
-          onFocus={this.handleFocusBlur}
-          onBlur={this.handleFocusBlur}
         />
       </div>
     );
@@ -50,7 +39,8 @@ TextField.defaultProps = {
   value: '',
   name: '',
   isPassword: false,
-  error: false
+  error: false,
+  multiLine: false
 };
 
 export default TextField;
