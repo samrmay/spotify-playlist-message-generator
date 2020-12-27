@@ -43,6 +43,11 @@ class Body extends React.Component {
             if (trackObjs.length > 0) {
                 this.setState({trackObjs, spotifyQueried: true})
             }
+
+            const message = localStorage.getItem('message')
+            if (message) {
+                this.setState({message})
+            }
         }
     }
 
@@ -111,7 +116,8 @@ class Body extends React.Component {
                 <hr />
                 {spotifyQueried ? 
                 <MockPlaylist 
-                    songs={trackObjs} 
+                    songs={trackObjs}
+                    message={message}
                     userAccessToken={userAccessToken}
                     handleTrackRefresh={this.handleTrackRefresh}
                     handleReset={this.handleReset}/> 

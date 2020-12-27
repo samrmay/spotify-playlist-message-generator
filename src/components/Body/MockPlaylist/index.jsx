@@ -45,11 +45,12 @@ class MockPlaylist extends React.Component {
     }
 
     savePlaylistToStorage() {
-        let {songs} = this.props
+        let {songs, message} = this.props
         const {playlistTitle} = this.state
 
         localStorage.clear()
         localStorage.setItem('playlistTitle', playlistTitle)
+        localStorage.setItem('message', message)
         songs = songs.filter(item => item)
         for (let i in songs) {
             localStorage.setItem(`song#${i}`, JSON.stringify(songs[i]))
