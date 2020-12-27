@@ -7,11 +7,15 @@
   cursor: pointer;
   padding: 5px;
   transition: background-color 0.2s;
+  transition: font-color 0.2s;
 }
 
 .loadingButtonBlack {
   background-color: black;
   color: white;
+}
+.loadingButtonBlack:hover {
+  color: #3399ff;
 }
 
 .loadingButtonWhite {
