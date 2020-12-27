@@ -1,5 +1,7 @@
 import React from 'react'
 import ShareMenu from './ShareMenu'
+import LoadingButton from '../LoadingButton'
+import styles from './styles.css'
 
 class SuccessMenu extends React.Component {
     constructor(props) {
@@ -9,10 +11,15 @@ class SuccessMenu extends React.Component {
     render() {
         const {playlist, handleReset} = this.props
         return(
-            <div>
-                <ShareMenu playlist={playlist} />
-                <button onClick={handleReset}>reset</button>
-                <button>donate/amazon link/ihatemyself?</button>
+            <div className={styles.successMenuContainer}>
+                <div className={styles.shareMenuContainer}>
+                    <LoadingButton 
+                        handleClick={handleReset}
+                        content='reset'
+                        width='150px'/>
+                    <ShareMenu playlist={playlist} />
+                </div>
+                <div>Success! if you liked the app, do something so I don't starve (?)</div>
             </div>
         )
     }

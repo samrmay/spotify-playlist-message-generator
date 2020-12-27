@@ -22,9 +22,8 @@ class ShareMenu extends React.Component {
         const viewLink = playlist.external_urls.spotify
 
         return(
-            <div>
+            <div className={styles.shareMenu}>
                 <h4 className={styles.titleContainer}>{title}</h4>
-                <hr />
                 <div className={styles.buttonMenu}>
                     <div className={styles.linkContainer}><SvgLink SVG={spotifyIcon} href={viewLink} alt='view playlist'/></div>
                     <div className={styles.linkContainer}><SvgLink SVG={facebookIcon} href={facebookLink} alt='facebook'/></div>
