@@ -29,7 +29,7 @@ SvgLink.defaultProps = {
     href: 'https://www.google.com',
     SVG: null,
     alt: 'google',
-    newTab: false,
+    newTab: true,
     width: '30px',
 }
 

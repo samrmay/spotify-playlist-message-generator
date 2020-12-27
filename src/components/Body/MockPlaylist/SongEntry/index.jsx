@@ -41,7 +41,7 @@ class SongEntry extends React.Component {
                     <LoadingButton 
                         content='new song' 
                         handleClick={this.handleRefresh}
-                        width='35px'
+                        width='20px'
                         height='20px'
                         fontSize='16px'
                         SVG={refreshIcon}

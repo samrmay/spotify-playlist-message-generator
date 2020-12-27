@@ -1,3 +1,8 @@
+.titleContainer {
+  padding: 5px;
+  margin: 5px;
+}
+
 .buttonMenu {
   display: flex;
   background-color: lightgray;
