@@ -30,7 +30,7 @@ SvgLink.defaultProps = {
     SVG: null,
     alt: 'google',
     newTab: false,
-    width: '30px'
+    width: '30px',
 }
 
 export default SvgLink
