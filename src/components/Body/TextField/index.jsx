@@ -22,15 +22,15 @@ class TextField extends React.Component {
 
   render() {
     const { height, width, value, placeholder, isPassword, error } = this.props;
-    let borderColor = 'black'
+    const style = {height}
     if (error) {
-      borderColor = 'red'
+      style.borderColor = 'red'
     }
     return (
       <div className={styles.textFieldContainer} style={{ height, width }}>
         <textarea
           className={styles.textInput}
-          style={{ height: height, borderColor }}
+          style={style}
           placeholder={placeholder}
           value={value}
           onChange={this.handleChange}

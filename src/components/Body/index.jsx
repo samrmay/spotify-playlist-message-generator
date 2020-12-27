@@ -80,7 +80,6 @@ class Body extends React.Component {
 
     render() {
         const {spotifyQueried, trackObjs, message, userAccessToken, messageError} = this.state
-        const instructions = ''
         return(
             <div>
                 <div className={styles.inputContainer}>
