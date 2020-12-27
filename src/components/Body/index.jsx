@@ -94,16 +94,17 @@ class Body extends React.Component {
     render() {
         const {spotifyQueried, trackObjs, message, userAccessToken, messageError} = this.state
         return(
-            <div>
+            <div className={styles.bodyContainer}>
                 <div className={styles.inputContainer}>
                     <TextField 
                         handleChange={this.handleChange} 
                         name='message'
                         placeholder='Type your message here.'
                         height='100px'
-                        width='400px'
+                        width='600px'
                         value={message}
-                        error={messageError}/>
+                        error={messageError}
+                        fontSize='20px'/>
                 </div>
                 <br />
                 <div className={styles.buttonContainer}>
@@ -113,16 +114,18 @@ class Body extends React.Component {
                         handleClick={this.searchMessage}
                         wasClicked={this.state.goClicked}/>
                 </div>
-                <hr />
-                {spotifyQueried ? 
-                <MockPlaylist 
-                    songs={trackObjs}
-                    message={message}
-                    userAccessToken={userAccessToken}
-                    handleTrackRefresh={this.handleTrackRefresh}
-                    handleReset={this.handleReset}/> 
-                : <div>Type a message that you would like to become playlist-ified.
-                    Use it to check out new music, or save it as a brand new playlist for Spotify and share with friends</div>}
+                <hr className={styles.inputPlaylisthr}/>
+                <div className={styles.playlistContainer}>
+                    {spotifyQueried ? 
+                    <MockPlaylist 
+                        songs={trackObjs}
+                        message={message}
+                        userAccessToken={userAccessToken}
+                        handleTrackRefresh={this.handleTrackRefresh}
+                        handleReset={this.handleReset}/> 
+                    : <div className={styles.instructions}>Type a message that you would like to become playlist-ified.
+                        Use it to check out new music, or save it as a brand new playlist for Spotify and share with friends</div>}
+                </div>
             </div>
         )
     }

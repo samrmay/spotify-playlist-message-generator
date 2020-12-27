@@ -19,7 +19,9 @@ class SuccessMenu extends React.Component {
                         width='150px'/>
                     <ShareMenu playlist={playlist} />
                 </div>
-                <div>Success! if you liked the app, do something so I don't starve (?)</div>
+                <div className={styles.donateLink}>
+                    Success! if you liked the app, do something so I don't starve (?)
+                </div>
             </div>
         )
     }

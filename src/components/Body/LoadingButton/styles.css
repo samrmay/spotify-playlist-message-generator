@@ -15,7 +15,7 @@
   color: white;
 }
 .loadingButtonBlack:hover {
-  color: #3399ff;
+  color: #4dc4e4;
 }
 
 .loadingButtonWhite {
@@ -23,5 +23,5 @@
   color: black;
 }
 .loadingButtonWhite:hover {
-  background-color: #3399ff;
+  background-color: #4dc4e4;
 }

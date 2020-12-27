@@ -1,3 +1,25 @@
+.bodyContainer {
+  width: 100%;
+  padding: 10px 0px;
+  background-color: #464743;
+  color: #b9ced0;
+}
+
+.instructions {
+  width: 800px;
+  font-size: large;
+}
+
+.playlistContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.inputPlaylisthr {
+  background-color: #444444;
+  margin: 20px 150px;
+}
+
 .inputContainer {
   justify-content: center;
   display: flex;

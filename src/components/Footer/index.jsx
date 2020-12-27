@@ -1,4 +1,5 @@
 import React from 'react'
+import styles from './styles.css'
 
 class Footer extends React.Component {
     constructor(props) {
@@ -7,9 +8,13 @@ class Footer extends React.Component {
 
     render() {
         return(
-            <div>
+            <div className={styles.footer}>
                 A mini project by Sam May.
-                <a href='https://github.com/samrmay/spotify-playlist-message-generator'> https://github.com/samrmay/spotify-playlist-message-generator</a>
+                <a 
+                    href='https://github.com/samrmay/spotify-playlist-message-generator'
+                    className={styles.link}> 
+                    https://github.com/samrmay/spotify-playlist-message-generator
+                </a>
             </div>
         )
     }

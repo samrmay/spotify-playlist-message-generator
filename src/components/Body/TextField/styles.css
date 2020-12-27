@@ -7,19 +7,19 @@
 }
 
 .textInput {
-  border-color: black;
+  border-color: #b9ced0;
+  color: white;
   border-width: 3px;
   border-style: solid;
   border-radius: 5px;
   background-color: transparent;
   width: 100%;
-  font-size: 16px;
   padding-left: 10px;
   padding-right: 10px;
   resize: none;
 }
 
 .textInput:focus {
-  border-color: #3399ff;
+  border-color: #4dc4e4;
   outline: none;
 }

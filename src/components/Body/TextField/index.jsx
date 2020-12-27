@@ -12,8 +12,8 @@ class TextField extends React.Component {
   }
 
   render() {
-    const { height, width, value, placeholder, isPassword, error } = this.props;
-    const style = {height}
+    const { height, width, value, placeholder, isPassword, error, fontSize } = this.props;
+    const style = {height, fontSize}
     if (error) {
       style.borderColor = 'red'
     }
@@ -40,7 +40,8 @@ TextField.defaultProps = {
   name: '',
   isPassword: false,
   error: false,
-  multiLine: false
+  multiLine: false,
+  fontSize: '16px'
 };
 
 export default TextField;

@@ -3,7 +3,8 @@
 }
 
 .playlistContainer {
-  background-color: whitesmoke;
+  width: 800px;
+  color: black;
   padding: 2px;
   border-radius: 2%;
   display: flex;
@@ -29,4 +30,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.donateLink {
+  color: #b9ced0;
 }
