@@ -45,7 +45,7 @@ class SongEntry extends React.Component {
                         height='20px'
                         fontSize='16px'
                         SVG={refreshIcon}
-                        backgroundColor='darkgray'
+                        backgroundColor='White'
                         wasClicked={this.state.refreshing}/>
                 </div>
             </div>

@@ -15,10 +15,10 @@ class AuthModal extends React.Component {
               <div className={styles.instructionsContainer}>{instructions}</div>
               <br />
               <div className={styles.optionsContainer}>
+                <button onClick={this.props.handleSkip}>{buttonContent}</button>
                 <a href={authLink} className={styles.modalContentLink}>
                   {linkContent}
                 </a>  
-                <button onClick={this.props.handleSkip}>{buttonContent}</button>
               </div>
             </div>
           </div>

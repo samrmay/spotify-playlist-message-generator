@@ -1,5 +1,4 @@
 .loadingButton {
-  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,12 +6,18 @@
   margin: 5px;
   cursor: pointer;
   padding: 5px;
+  transition: background-color 0.2s;
 }
 
-.loadingButtonText {
-  margin: 15px auto;
+.loadingButtonBlack {
+  background-color: black;
+  color: white;
 }
 
-.loadingButtonAnimation {
-  margin: auto auto;
+.loadingButtonWhite {
+  background-color: white;
+  color: black;
+}
+.loadingButtonWhite:hover {
+  background-color: #3399ff;
 }
