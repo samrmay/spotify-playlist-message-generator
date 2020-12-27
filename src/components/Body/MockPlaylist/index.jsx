@@ -1,7 +1,7 @@
 import React from 'react'
 import SongEntry from './SongEntry'
 import AuthModal from './AuthModal'
-import ShareMenu from './ShareMenu'
+import SuccessMenu from './SuccessMenu'
 import TextField from '../TextField'
 import LoadingButton from '../LoadingButton'
 import {getRedirectURL, createPlaylist} from '../../../services/backend'
@@ -19,6 +19,7 @@ class MockPlaylist extends React.Component {
             authURL: null
         }
         this.handleChange = this.handleChange.bind(this)
+        this.handleReset = this.handleReset.bind(this)
         this.savePlaylistToStorage = this.savePlaylistToStorage.bind(this)
         this.handleCreatePlaylist = this.handleCreatePlaylist.bind(this)
         this.showAuthModal = this.showAuthModal.bind(this)
@@ -36,6 +37,11 @@ class MockPlaylist extends React.Component {
 
     handleChange(name, value) {
         this.setState({[name]: value, playlistTitleError: false})
+    }
+
+    handleReset() {
+        this.props.handleReset()
+        this.setState({playlistTitle: '', playlistCreated: false, playlist: null})
     }
 
     savePlaylistToStorage() {
@@ -77,9 +83,7 @@ class MockPlaylist extends React.Component {
         this.setState({authURL: null})
     }
 
-    render() {
-        const {songs, userAccessToken, handleTrackRefresh} = this.props
-        const {playlistTitle, playlistTitleError, playlistCreated, playlistCreating, playlist, authURL} = this.state
+    generateSongEntryArr(songs, handleTrackRefresh) {
         let songEntryArr = null
         if (songs.length > 0) {
             songEntryArr = []
@@ -95,6 +99,13 @@ class MockPlaylist extends React.Component {
                 }
             }
         }
+        return songEntryArr
+    }
+
+    render() {
+        const {songs, userAccessToken, handleTrackRefresh} = this.props
+        const {playlistTitle, playlistTitleError, playlistCreated, playlistCreating, playlist, authURL} = this.state
+        const songEntryArr = this.generateSongEntryArr(songs, handleTrackRefresh)
 
         const actionButton = <LoadingButton 
             content='create playlist' 
@@ -129,7 +140,7 @@ class MockPlaylist extends React.Component {
                 </div>
 
                 <div className={styles.actionShareContainer}>
-                    {playlistCreated ? <ShareMenu playlist={playlist}/> : actionButton}
+                    {playlistCreated ? <SuccessMenu playlist={playlist} handleReset={this.handleReset}/> : actionButton}
                 </div>
             </div>
         )

@@ -19,6 +19,7 @@ class Body extends React.Component {
             messageError: false
         }
         this.handleChange = this.handleChange.bind(this)
+        this.handleReset = this.handleReset.bind(this)
         this.searchMessage = this.searchMessage.bind(this)
         this.handleTrackRefresh = this.handleTrackRefresh.bind(this)
     }
@@ -47,6 +48,10 @@ class Body extends React.Component {
 
     handleChange(name, value) {
         this.setState({[name]: value, messageError: false})
+    }
+
+    handleReset() {
+        this.setState({message: '', trackObjs: [], spotifyQueried: false})
     }
 
     async searchWord(word) {
@@ -106,7 +111,8 @@ class Body extends React.Component {
                     songs={trackObjs} 
                     standby={true}
                     userAccessToken={userAccessToken}
-                    handleTrackRefresh={this.handleTrackRefresh}/> 
+                    handleTrackRefresh={this.handleTrackRefresh}
+                    handleReset={this.handleReset}/> 
                 : <div>Type a message that you would like to become playlist-ified.
                     Use it to check out new music, or save it as a brand new playlist for Spotify and share with friends</div>}
             </div>
