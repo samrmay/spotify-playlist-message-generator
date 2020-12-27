@@ -48,6 +48,9 @@ class Body extends React.Component {
 
     handleChange(name, value) {
         this.setState({[name]: value, messageError: false})
+        if (name == 'message') {
+            this.setState({spotifyQueried: false})
+        }
     }
 
     handleReset() {
@@ -109,7 +112,6 @@ class Body extends React.Component {
                 {spotifyQueried ? 
                 <MockPlaylist 
                     songs={trackObjs} 
-                    standby={true}
                     userAccessToken={userAccessToken}
                     handleTrackRefresh={this.handleTrackRefresh}
                     handleReset={this.handleReset}/> 
@@ -121,12 +123,3 @@ class Body extends React.Component {
 }
 
 export default Body
-
-
-function timeout(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-async function sleep(ms) {
-    await timeout(ms);
-    return null;
-}
