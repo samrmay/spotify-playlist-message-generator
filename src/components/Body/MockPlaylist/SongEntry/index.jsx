@@ -36,7 +36,7 @@ class SongEntry extends React.Component {
             const externalLink = song.external_urls.spotify
             const artistsString = this.stringifyArtists(artists)
             return(
-            <div>
+            <div className={styles.rootContainer}>
                 <div className={styles.songEntryContainer}>
                     <div className={styles.coverContainer}>
                         <a href={externalLink} target='_blank'><img src={albumLink} alt='loading...'/></a>
@@ -64,8 +64,11 @@ class SongEntry extends React.Component {
             return(
                 <div className={styles.headerContainer}>
                     <div className={styles.header}>
-                        <div className={styles.songName}>Title</div>
-                        <div className={styles.artistsString}>Artists<div>new song</div></div>
+                        <h4 className={styles.songName}>Title</h4>
+                        <div className={styles.artistsString}>
+                            <h4 className={styles.headerText}>Artists</h4>
+                            <h4 className={styles.headerText}>new song</h4>
+                        </div>
                     </div>
                 </div>
             )

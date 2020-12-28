@@ -1,4 +1,9 @@
 .root {
   color: #8e8e8e;
-  margin: -7.5px;
+  margin: -7.8px;
+  height: 100vh;
+  overflow: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

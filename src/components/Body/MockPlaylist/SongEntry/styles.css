@@ -1,3 +1,6 @@
+.rootContainer {
+  background-color: #262626;
+}
 .songEntryContainer {
   display: flex;
   background-color: #262626;
@@ -13,16 +16,21 @@
 }
 .songName {
   width: 50%;
+  margin: 5px 0px;
 }
 
 .headerContainer {
-  background-color: lightgray;
+  background-color: #191919;
   padding: 5px;
   border-bottom: black solid 2px;
+  color: white;
 }
 .header {
   display: flex;
   margin: 0px 0px 0px 78px;
+}
+.headerText {
+  margin: 5px 0px;
 }
 
 .artistsString {

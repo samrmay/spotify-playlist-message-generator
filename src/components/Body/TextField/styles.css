@@ -6,7 +6,7 @@
   display: flex;
 }
 
-.textInput {
+.textInputDark {
   border-color: #b9ced0;
   color: white;
   border-width: 3px;
@@ -19,7 +19,25 @@
   resize: none;
 }
 
-.textInput:focus {
+.textInputDark:focus {
   border-color: #4dc4e4;
+  outline: none;
+}
+
+.textInputLight {
+  border-color: black;
+  color: black;
+  border-width: 3px;
+  border-style: solid;
+  border-radius: 5px;
+  background-color: transparent;
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  resize: none;
+}
+
+.textInputLight:focus {
+  border-color: #1ea3c8;
   outline: none;
 }

@@ -12,7 +12,8 @@ class TextField extends React.Component {
   }
 
   render() {
-    const { height, width, value, placeholder, isPassword, error, fontSize } = this.props;
+    const { height, width, value, placeholder } = this.props;
+    const {isPassword, error, fontSize, mode} = this.props
     const style = {height, fontSize}
     if (error) {
       style.borderColor = 'red'
@@ -20,7 +21,7 @@ class TextField extends React.Component {
     return (
       <div className={styles.textFieldContainer} style={{ height, width }}>
         <textarea
-          className={styles.textInput}
+          className={styles['textInput' + mode]}
           style={style}
           placeholder={placeholder}
           value={value}
@@ -41,7 +42,8 @@ TextField.defaultProps = {
   isPassword: false,
   error: false,
   multiLine: false,
-  fontSize: '16px'
+  fontSize: '16px',
+  mode: 'Light'
 };
 
 export default TextField;

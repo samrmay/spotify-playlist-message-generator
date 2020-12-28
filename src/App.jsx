@@ -12,8 +12,10 @@ class App extends React.Component {
     render() {
         return(
             <div className={styles.root}>
-                <Header />
-                <div className={styles.bodyContainer}><Body /></div>
+                <div>
+                    <Header />
+                    <div className={styles.bodyContainer}><Body /></div>
+                </div>
                 <div><Footer /></div>
             </div>
         )
