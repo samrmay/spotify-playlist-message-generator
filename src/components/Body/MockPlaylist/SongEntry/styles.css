@@ -1,24 +1,43 @@
 .songEntryContainer {
   display: flex;
-  background-color: darkgray;
+  background-color: #262626;
   padding: 5px;
-  border-top: black solid 2px;
-  border-bottom: black solid 2px;
+  color: white;
+  font-size: 16px;
 }
-
+.contentContainer {
+  display: flex;
+  width: 100%;
+  margin: 0px 0px 0px 15px;
+  align-items: center;
+}
 .songName {
   width: 50%;
 }
 
 .headerContainer {
-  display: flex;
   background-color: lightgray;
   padding: 5px;
   border-bottom: black solid 2px;
+}
+.header {
+  display: flex;
+  margin: 0px 0px 0px 78px;
 }
 
 .artistsString {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
+}
+
+.coverContainer {
+  width: 64px;
+  height: 64px;
+}
+
+.border {
+  background-color: #737373;
+  margin: 0px 5px;
 }

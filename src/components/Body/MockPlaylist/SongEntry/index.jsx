@@ -30,31 +30,43 @@ class SongEntry extends React.Component {
 
     render() {
         if (!this.props.header) {
-            const {song} = this.props
-            const {name, artists} = song
+            const {song, border} = this.props
+            const {name, artists, album} = song
+            const albumLink = album.images[2].url
+            const externalLink = song.external_urls.spotify
             const artistsString = this.stringifyArtists(artists)
             return(
-            <div className={styles.songEntryContainer}>
-                <div className={styles.songName}>{name}</div>
-                <div className={styles.artistsString}>
-                    {artistsString}
-                    <LoadingButton 
-                        content='new song' 
-                        handleClick={this.handleRefresh}
-                        width='20px'
-                        height='20px'
-                        fontSize='16px'
-                        SVG={refreshIcon}
-                        backgroundColor='White'
-                        wasClicked={this.state.refreshing}/>
+            <div>
+                <div className={styles.songEntryContainer}>
+                    <div className={styles.coverContainer}>
+                        <a href={externalLink} target='_blank'><img src={albumLink} alt='loading...'/></a>
+                    </div>
+                    <div className={styles.contentContainer}>
+                        <div className={styles.songName}>{name}</div>
+                        <div className={styles.artistsString}>
+                            {artistsString}
+                            <LoadingButton 
+                                content='new song' 
+                                handleClick={this.handleRefresh}
+                                width='20px'
+                                height='20px'
+                                fontSize='16px'
+                                SVG={refreshIcon}
+                                backgroundColor='White'
+                                wasClicked={this.state.refreshing}/>
+                        </div>
+                    </div>
                 </div>
+                {border ? <hr className={styles.border}/> : null}
             </div>
             )
         } else {
             return(
                 <div className={styles.headerContainer}>
-                    <div className={styles.songName}>Title</div>
-                    <div className={styles.artistsString}>Artists<div>new song</div></div>
+                    <div className={styles.header}>
+                        <div className={styles.songName}>Title</div>
+                        <div className={styles.artistsString}>Artists<div>new song</div></div>
+                    </div>
                 </div>
             )
         }
@@ -66,5 +78,6 @@ export default SongEntry
 SongEntry.defaultProps = {
     header: false,
     index: -1,
-    refreshEntry: () => {}
+    refreshEntry: () => {},
+    border: true
 }

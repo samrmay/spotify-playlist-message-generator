@@ -95,7 +95,8 @@ class MockPlaylist extends React.Component {
                             song={songs[i].track} 
                             key={`${songs[i].track.id}${Date.now()}${i}`} 
                             index={i} 
-                            refreshEntry={handleTrackRefresh}/>
+                            refreshEntry={handleTrackRefresh}
+                            border={i != (songs.length-1)}/>
                     )
                 }
             }
