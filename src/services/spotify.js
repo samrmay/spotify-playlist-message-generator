@@ -30,6 +30,7 @@ function generatePolymorphisms(message) {
     a: ["ay", "aye"],
     for: ["4", "foor"],
     to: ["too"],
+    into: ["in to"],
     two: [2, "too"],
     the: ["dah", "duh"],
     and: ["anne"],
