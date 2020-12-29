@@ -5,6 +5,7 @@ import SuccessMenu from './SuccessMenu'
 import TextField from '../TextField'
 import LoadingButton from '../LoadingButton'
 import {getRedirectURL, createPlaylist} from '../../../services/backend'
+import LoadingIcon from '../../../assets/loading.svg'
 import styles from './styles.css'
 
 class MockPlaylist extends React.Component {
@@ -138,7 +139,9 @@ class MockPlaylist extends React.Component {
                 </div>
                 <SongEntry header={true} />
                 <div className={styles.songsContainer}>
-                    {songEntryArr ? songEntryArr : <div>loading...</div>}
+                    {songEntryArr 
+                        ? songEntryArr 
+                        : <div className={styles.loading}><LoadingIcon /></div>}
                 </div>
 
                 <div className={styles.actionShareContainer}>

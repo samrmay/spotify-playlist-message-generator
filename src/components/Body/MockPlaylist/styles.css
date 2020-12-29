@@ -10,6 +10,13 @@
   flex-direction: column;
   padding: 5px 20px;
 }
+.loading {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #262626;
+}
 
 .songsContainer {
   overflow: auto;

@@ -124,7 +124,7 @@ class Body extends React.Component {
                         handleTrackRefresh={this.handleTrackRefresh}
                         handleReset={this.handleReset}/> 
                     : <div className={styles.instructions}>Type a message that you would like to become playlist-ified.
-                        Use it to check out new music, or save it as a brand new playlist for Spotify and share with friends</div>}
+                        Use it to check out new music, or save it as a brand new playlist for Spotify and share with friends (examples here eventually)</div>}
                 </div>
             </div>
         )
