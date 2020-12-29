@@ -1,8 +1,10 @@
 .shareMenu {
-  background-color: lightgray;
+  background-color: #262626;
   border-radius: 5px;
   margin: 10px;
   border: #4dc4e4 solid 3px;
+  color: white;
+  font-size: 20px;
 }
 
 .titleContainer {

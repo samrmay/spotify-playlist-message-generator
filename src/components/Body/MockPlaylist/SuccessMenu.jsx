@@ -20,7 +20,8 @@ class SuccessMenu extends React.Component {
                     <ShareMenu playlist={playlist} />
                 </div>
                 <div className={styles.donateLink}>
-                    Success! if you liked the app, do something so I don't starve (?)
+                    Success! If you liked the app (or hated it), 
+                    reach out on <a href='https://twitter.com/samrmay1'>twitter</a> or via <a href='mailto:samrmay@sas.upenn.edu'>email</a> (I also happily accept freelance work).
                 </div>
             </div>
         )

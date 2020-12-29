@@ -10,7 +10,7 @@ class Header extends React.Component {
     render() {
         return(
             <div className={styles.header}>
-                <h2 className={styles.title}>Playlist Message Generator for Spotify ;)</h2>
+                <h2 className={styles.title}>Playlist-ifier for Spotify</h2>
                 <LinkBar />
             </div>
         )

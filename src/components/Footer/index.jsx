@@ -9,12 +9,9 @@ class Footer extends React.Component {
     render() {
         return(
             <div className={styles.footer}>
-                A mini project by Sam May.
-                <a 
-                    href='https://github.com/samrmay/spotify-playlist-message-generator'
-                    className={styles.link}> 
-                    https://github.com/samrmay/spotify-playlist-message-generator
-                </a>
+                A mini project by <a 
+                    href='https://github.com/samrmay'
+                    className={styles.link}>Sam May</a>
             </div>
         )
     }
