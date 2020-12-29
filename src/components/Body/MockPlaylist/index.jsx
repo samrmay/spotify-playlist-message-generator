@@ -69,9 +69,11 @@ class MockPlaylist extends React.Component {
 
         this.setState({playlistCreating: true})
         const result = await createPlaylist(userAccessToken, songs.map(item => item.track), playlistTitle)
-        if (result.href) {
+        if (result && result.href) {
             this.setState({playlist: result, playlistCreated: true, playlistCreating: false})
             localStorage.clear()
+        } else {
+            this.showAuthModal()
         }
     }
     

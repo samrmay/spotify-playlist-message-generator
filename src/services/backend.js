@@ -59,5 +59,11 @@ export function createPlaylist(userAccessToken, tracks, playlistTitle) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
-  }).then((response) => response.json());
+  }).then((response) => {
+    if (response.status == 200 || response.status == 201) {
+      return response.json();
+    } else {
+      return null;
+    }
+  });
 }
