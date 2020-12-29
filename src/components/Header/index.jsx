@@ -1,4 +1,5 @@
 import React from 'react'
+import LinkBar from './LinkBar'
 import styles from './styles.css'
 
 class Header extends React.Component {
@@ -10,6 +11,7 @@ class Header extends React.Component {
         return(
             <div className={styles.header}>
                 <h2 className={styles.title}>Playlist Message Generator for Spotify ;)</h2>
+                <LinkBar />
             </div>
         )
     }
