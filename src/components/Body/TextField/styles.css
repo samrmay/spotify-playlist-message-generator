@@ -17,6 +17,7 @@
   padding-left: 10px;
   padding-right: 10px;
   resize: none;
+  font-family: sans-serif;
 }
 
 .textInputDark:focus {
@@ -35,6 +36,7 @@
   padding-left: 10px;
   padding-right: 10px;
   resize: none;
+  font-family: sans-serif;
 }
 
 .textInputLight:focus {

@@ -7,7 +7,7 @@
 
 .instructions {
   width: 800px;
-  font-size: large;
+  font-size: 24px;
 }
 
 .playlistContainer {
@@ -23,6 +23,7 @@
 .inputContainer {
   justify-content: center;
   display: flex;
+  padding: 15px 0px;
 }
 
 .buttonContainer {
