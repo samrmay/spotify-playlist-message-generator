@@ -33,17 +33,18 @@ function generatePolymorphisms(message) {
     two: [2, "too"],
     the: ["dah", "duh"],
     and: ["anne"],
+    an: ["anne"],
     be: ["bee"],
     "&": ["anne"],
     have: ["haf", "hav"],
-    app: ["application"],
     "you're": ["ur"],
     your: ["ur"],
-    in: [""],
+    in: ["inne"],
     "don't": ["do not"],
     do: ["dew"],
     "doesn't": ["does not"],
     "won't": ["will not"],
+    with: ["whiff"],
   };
 
   const keys = Object.keys(POLY_DICT);
