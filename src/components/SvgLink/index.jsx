@@ -17,7 +17,7 @@ class SvgLink extends React.Component {
                         <SVG 
                             alt={alt} 
                             className={styles.svg}
-                            width={width}/>
+                            height={width}/>
                    </div>
                 </a>
             </div>

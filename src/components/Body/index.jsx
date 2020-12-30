@@ -99,7 +99,7 @@ class Body extends React.Component {
                     <TextField 
                         handleChange={this.handleChange} 
                         name='message'
-                        placeholder='Type your message here.'
+                        placeholder='Type a message to be playlist-ified.'
                         height='100px'
                         width='600px'
                         value={message}
@@ -124,7 +124,6 @@ class Body extends React.Component {
                         handleTrackRefresh={this.handleTrackRefresh}
                         handleReset={this.handleReset}/> 
                     :   <div className={styles.instructions}>This is an app that creates playlists of songs that spell out whatever mesage you want. 
-                            Type a message that you would like to become playlist-ified.
                             Use it to check out new music, or save it as a brand new playlist for Spotify and share with friends, 
                             family, coworkers, bosses, enemies, whomever I guess.
                             <br />

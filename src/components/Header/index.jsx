@@ -10,7 +10,9 @@ class Header extends React.Component {
     render() {
         return(
             <div className={styles.header}>
-                <h2 className={styles.title}>Playlist-ifier for Spotify</h2>
+                <a href={process.env.REDIRECT_URI} className={styles.titleLink}>
+                    <h2 className={styles.title}>Playlist-ifier for Spotify</h2>
+                </a>
                 <LinkBar />
             </div>
         )
