@@ -39,6 +39,16 @@
   align-items: center;
 }
 
-.donateLink {
+.plugLink {
   color: black;
+}
+
+.playlistCreatedContainer {
+  padding: 10px;
+}
+.playlistCreatedLink {
+  width: 50%;
+  color: inherit;
+  font-size: 1.17em;
+  font-weight: bold;
 }

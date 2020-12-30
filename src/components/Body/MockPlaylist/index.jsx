@@ -131,7 +131,14 @@ class MockPlaylist extends React.Component {
                         linkContent='Connect to Spotify'
                         buttonContent="eh i'd rather not"/> : null}
 
-                <div className={styles.playlistTitleContainer}>
+                {playlistCreated 
+                ? <div className={styles.playlistCreatedContainer}>
+                        <a 
+                            className={styles.playlistCreatedLink} 
+                            href={playlist.external_urls.spotify} >{playlist.name}
+                        </a>
+                </div>
+                : <div className={styles.playlistTitleContainer}>
                     <TextField 
                         width='300px' 
                         name='playlistTitle'
@@ -139,7 +146,7 @@ class MockPlaylist extends React.Component {
                         value={playlistTitle}
                         handleChange={this.handleChange}
                         error={playlistTitleError}/>
-                </div>
+                </div>}
                 <SongEntry header={true} />
                 <div className={styles.songsContainer}>
                     {songEntryArr 
