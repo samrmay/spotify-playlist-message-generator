@@ -7,14 +7,22 @@ import styles from './styles.css'
 class App extends React.Component {
     constructor() {
         super()
+        this.state = {
+            isMobile: false
+        }
+    }
+
+    componentDidMount() {
+        this.setState({isMobile: !window.matchMedia('(min-width: 800px)').matches})
     }
 
     render() {
+        const {isMobile} = this.state
         return(
             <div className={styles.root}>
                 <div>
                     <Header />
-                    <div className={styles.bodyContainer}><Body /></div>
+                    <div className={styles.bodyContainer}><Body isMobile={isMobile}/></div>
                 </div>
                 <div><Footer /></div>
             </div>

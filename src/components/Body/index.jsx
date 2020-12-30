@@ -22,6 +22,9 @@ class Body extends React.Component {
         this.handleReset = this.handleReset.bind(this)
         this.searchMessage = this.searchMessage.bind(this)
         this.handleTrackRefresh = this.handleTrackRefresh.bind(this)
+
+        this.desktopInputDimensions = {height: '100px', width: '600px'}
+        this.mobileInputDimensions = {height: '200px', width: window.innerWidth}
     }
 
     componentDidMount() {
@@ -93,6 +96,8 @@ class Body extends React.Component {
 
     render() {
         const {spotifyQueried, trackObjs, message, userAccessToken, messageError} = this.state
+        const {isMobile} = this.props
+        const inputDimensions = isMobile ? this.mobileInputDimensions : this.desktopInputDimensions
         return(
             <div className={styles.bodyContainer}>
                 <div className={styles.inputContainer}>
@@ -100,8 +105,8 @@ class Body extends React.Component {
                         handleChange={this.handleChange} 
                         name='message'
                         placeholder='Type a message to be playlist-ified.'
-                        height='100px'
-                        width='600px'
+                        height={inputDimensions.height}
+                        width={inputDimensions.width}
                         value={message}
                         error={messageError}
                         fontSize='20px'/>
