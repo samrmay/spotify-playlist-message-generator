@@ -21,7 +21,8 @@ class SuccessMenu extends React.Component {
                 </div>
                 <div className={styles.donateLink}>
                     Success! If you liked the app (or hated it), 
-                    reach out on <a href='https://twitter.com/samrmay1'>twitter</a> or via <a href='mailto:samrmay@sas.upenn.edu'>email</a> (I also happily accept freelance work).
+                    reach out on <a href='https://twitter.com/samrmay1'>twitter</a> or via <a href='mailto:samrmay@sas.upenn.edu'>email</a> (I 
+                    also happily accept freelance work and am always looking for fun projects).
                 </div>
             </div>
         )

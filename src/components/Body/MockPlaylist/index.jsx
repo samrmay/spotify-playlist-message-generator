@@ -72,6 +72,7 @@ class MockPlaylist extends React.Component {
         if (result && result.href) {
             this.setState({playlist: result, playlistCreated: true, playlistCreating: false})
             localStorage.clear()
+            window.scroll({top: document.body.scrollHeight, behavior: 'smooth'})
         } else {
             this.showAuthModal()
         }
@@ -134,7 +135,7 @@ class MockPlaylist extends React.Component {
                     <TextField 
                         width='300px' 
                         name='playlistTitle'
-                        placeholder='my sick new playlist'
+                        placeholder='super clever and original playlist'
                         value={playlistTitle}
                         handleChange={this.handleChange}
                         error={playlistTitleError}/>
