@@ -52,10 +52,13 @@ function generatePolymorphisms(message) {
   const keys = Object.keys(POLY_DICT);
   for (let i in keys) {
     const key = keys[i];
-    const patt = new RegExp(`\\b${key}\\b`, "gi");
-    const poly =
-      POLY_DICT[key][Math.floor(Math.random() * POLY_DICT[key].length)];
-    message = message.replace(patt, poly);
+    const patt = new RegExp(`\\b${key}\\b`, "i");
+    while (message.search(patt) !== -1) {
+      message = message.replace(
+        patt,
+        POLY_DICT[key][Math.floor(Math.random() * POLY_DICT[key].length)]
+      );
+    }
   }
   message = message.replace(/[\.!,()\?:"']/gi, "");
   return message;
