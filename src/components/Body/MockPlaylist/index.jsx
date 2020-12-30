@@ -135,7 +135,8 @@ class MockPlaylist extends React.Component {
                 ? <div className={styles.playlistCreatedContainer}>
                         <a 
                             className={styles.playlistCreatedLink} 
-                            href={playlist.external_urls.spotify} >{playlist.name}
+                            href={playlist.external_urls.spotify}
+                            target='_blank' >{playlist.name}
                         </a>
                 </div>
                 : <div className={styles.playlistTitleContainer}>
