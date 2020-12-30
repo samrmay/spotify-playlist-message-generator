@@ -46,6 +46,7 @@ function generatePolymorphisms(message) {
     "doesn't": ["does not"],
     "won't": ["will not"],
     with: ["whiff"],
+    shit: ["shitt"],
   };
 
   const keys = Object.keys(POLY_DICT);

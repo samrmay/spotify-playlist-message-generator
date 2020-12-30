@@ -88,10 +88,17 @@ class Body extends React.Component {
         localStorage.clear()
         this.setState({trackObjs: [], spotifyQueried: true, goClicked: true})
         const message = parseSequence(this.state.message)
-        const trackPromises = message.map(item => this.searchWord(item))
-        const tracks = await Promise.all(trackPromises)
-        const trackObjs = tracks.map((item, index) => {return {track: item, word: message[index]}})
-        this.setState({trackObjs, goClicked: false})
+        
+        for (let i in message) {
+            const word = message[i]
+            const track = await this.searchWord(word)
+            this.setState((prevState) => {
+                const newTrackObjs = prevState.trackObjs
+                newTrackObjs.push({track, word})
+                return {trackObjs: newTrackObjs}
+            })
+        }
+        this.setState({goClicked: false})
     }
 
     render() {
