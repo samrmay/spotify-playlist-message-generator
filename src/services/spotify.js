@@ -60,6 +60,6 @@ function generatePolymorphisms(message) {
       );
     }
   }
-  message = message.replace(/[\.!,()\?:"']/gi, "");
+  message = message.replace(/[\.!,()\?:"'\*]/gi, "");
   return message;
 }

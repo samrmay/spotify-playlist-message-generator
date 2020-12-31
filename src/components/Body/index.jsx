@@ -1,5 +1,6 @@
 import React from 'react'
 import MockPlaylist from './MockPlaylist'
+import LinkTweetModal from './LinkTweetModal'
 import TextField from './TextField'
 import LoadingButton from './LoadingButton'
 import {parseSequence} from '../../services/spotify'
@@ -16,12 +17,14 @@ class Body extends React.Component {
             trackObjs: [],
             goClicked: false,
             userAccessToken: null,
-            messageError: false
+            messageError: false,
+            showTwitterModal: false
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleReset = this.handleReset.bind(this)
         this.searchMessage = this.searchMessage.bind(this)
         this.handleTrackRefresh = this.handleTrackRefresh.bind(this)
+        this.toggleTwitterModal = this.toggleTwitterModal.bind(this)
 
         this.desktopInputDimensions = {height: '100px', width: '600px'}
         this.mobileInputDimensions = {height: '200px', width: window.innerWidth}
@@ -101,12 +104,22 @@ class Body extends React.Component {
         this.setState({goClicked: false})
     }
 
+    toggleTwitterModal() {
+        this.setState(prevState => {return {showTwitterModal: !prevState.showTwitterModal}})
+    }
+
     render() {
-        const {spotifyQueried, trackObjs, message, userAccessToken, messageError} = this.state
+        const {spotifyQueried, trackObjs, message, userAccessToken, messageError, showTwitterModal} = this.state
         const {isMobile} = this.props
         const inputDimensions = isMobile ? this.mobileInputDimensions : this.desktopInputDimensions
         return(
             <div className={styles.bodyContainer}>
+                {showTwitterModal 
+                    ? <LinkTweetModal 
+                        handleSkip={this.toggleTwitterModal} 
+                        handleChange={this.handleChange}
+                        searchMessage={this.searchMessage}/> : null}
+
                 <div className={styles.inputContainer}>
                     <TextField 
                         handleChange={this.handleChange} 
@@ -125,6 +138,10 @@ class Body extends React.Component {
                         width='100px' 
                         handleClick={this.searchMessage}
                         wasClicked={this.state.goClicked}/>
+                    <LoadingButton 
+                        content='playlist-ify tweet'
+                        width='200px'
+                        handleClick={this.toggleTwitterModal}/>
                 </div>
                 <hr className={styles.inputPlaylisthr}/>
                 <div className={styles.playlistContainer}>

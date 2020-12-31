@@ -32,5 +32,6 @@ AuthModal.defaultProps = {
   authLink: 'https://www.google.com',
   instructions: 'instructions',
   linkContent: 'Go to google',
-  buttonContent: 'wait until later'
+  buttonContent: 'wait until later',
+  handleSkip: () => {}
 }
