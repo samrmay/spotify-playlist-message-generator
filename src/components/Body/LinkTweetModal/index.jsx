@@ -8,7 +8,8 @@ class LinkTweetModal extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            tweetUrl: ''
+            tweetUrl: '',
+            searching: false
         }
 
         this.handleChange = this.handleChange.bind(this)
@@ -21,7 +22,9 @@ class LinkTweetModal extends React.Component {
 
     async searchTweet() {
         const {handleChange, searchMessage, handleSkip} = this.props
+        this.setState({searching: true})
         const {data} = await searchTweet(this.state.tweetUrl)
+        this.setState({searching: false})
         let text = data.text
 
         if (text) {
@@ -33,7 +36,7 @@ class LinkTweetModal extends React.Component {
     }
 
     render() {
-        const {tweetUrl} = this.state
+        const {tweetUrl, searching} = this.state
 
         return (
           <div className={styles.modalContainer}>
@@ -55,7 +58,8 @@ class LinkTweetModal extends React.Component {
                     <LoadingButton 
                         handleClick={this.searchTweet}
                         width='100px'
-                        content='go'/>
+                        content='go'
+                        wasClicked={searching}/>
                 </div>
             </div>
           </div>
