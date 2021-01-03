@@ -5,6 +5,7 @@ const plugins = [
   new HtmlWebPackPlugin({
     template: path.resolve(__dirname, "public", "index.html"),
     filename: "index.html",
+    favicon: "./src/assets/favicon.ico",
   }),
 ];
 if (process.env.NODE_ENV !== "production") {
