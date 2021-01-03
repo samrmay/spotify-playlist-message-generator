@@ -152,9 +152,9 @@ class Body extends React.Component {
                         userAccessToken={userAccessToken}
                         handleTrackRefresh={this.handleTrackRefresh}
                         handleReset={this.handleReset}/> 
-                    :   <div className={styles.instructions}>This is an app that creates playlists of songs that spell out whatever message you want. 
+                    :   <div className={styles.instructions}>This is an app that creates playlists of songs that spell out whatever message (or tweet) you want. 
                             Use it to check out new music, or save it as a brand new playlist for Spotify and share with friends, 
-                            family, coworkers, bosses, enemies, whomever I guess. (May require creative use of homophones)
+                            family, coworkers, bosses, enemies, whomever I guess. Type a message or link a tweet to get started. (May require creative use of homophones)
                             <br />
                             <br />
                             Example: <a 
