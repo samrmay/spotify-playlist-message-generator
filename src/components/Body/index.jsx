@@ -163,9 +163,6 @@ class Body extends React.Component {
                             </a> - the first passage of George Orwell's <a href='https://en.wikipedia.org/wiki/Nineteen_Eighty-Four' target='_blank'>
                                 1984
                             </a> in playlist form.
-                            <br/>
-                            <br/>
-                            Similar app by Jersey Fonseca: <a href='https://www.playlistify.xyz/'>Playlistify.xyz</a>
                         </div>}
                 </div>
             </div>
